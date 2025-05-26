@@ -11,9 +11,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.peyademoapp.data.repository.ProductRepository
 import com.example.peyademoapp.ui.theme.PeyaDemoAppTheme
+import jakarta.inject.Inject
 
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var productRepository: ProductRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
