@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.peyademoapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.peyademoapp"
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -51,8 +51,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":core:model"))
     implementation(project(":data"))
-    implementation(project(":utils"))
+    implementation(project(":library:utils"))
     implementation(project(":feature:cart"))
+    implementation(libs.androidx.navigation.compose.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,6 +64,5 @@ dependencies {
     implementation (libs.gson)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
-    implementation(libs.retrofit.v310snapshot)
     implementation(libs.hilt.android)
 }

@@ -6,19 +6,29 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.core.model.Product
 import com.example.peyademoapp.data.repository.ProductRepository
 import com.example.peyademoapp.ui.theme.PeyaDemoAppTheme
+import com.example.peyademoapp.view.AppNavigation
 import jakarta.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var productRepository: ProductRepository
+
+    private val productList = listOf(
+        Product("Zapatos", 2500.0),
+        Product("Camisa", 1900.0),
+        Product("Pantalón", 3200.0),
+        Product("Gorra", 1200.0),
+        Product("Remera", 1500.0),
+        Product("Bufanda", 1100.0)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +36,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             PeyaDemoAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                        
+                    AppNavigation(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
                     )
                 }
             }
@@ -51,4 +61,17 @@ fun GreetingPreview() {
     PeyaDemoAppTheme {
         Greeting("Android")
     }
+}
+
+@Composable
+fun ProductsList(products: List<Product>, modifier: Modifier = Modifier) {
+    LazyColumn {
+        items(products.size) { index ->
+            Text(
+                text = "${products[index].name} - \$${products[index].price}",
+
+            )
+        }
+    }
+
 }
