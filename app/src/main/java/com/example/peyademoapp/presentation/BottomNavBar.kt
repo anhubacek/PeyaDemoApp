@@ -16,10 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavController
 
 @Composable
 fun BottomNavBar(
+    navController: NavController,
     containerColor: Color = Color.White,
     modifier: Any = Modifier
         .height(80.dp)
@@ -37,16 +38,19 @@ fun BottomNavBar(
             icon = Icons.Default.Home,
             label = "Inicio",
             link = "home",
+            navController
         )
         BottomBarIcon(
             icon = Icons.Default.ShoppingCart,
             label = "Mis pedidos",
             link = "orders",
+            navController
         )
         BottomBarIcon(
             icon = Icons.Default.AccountCircle,
             label = "Perfil",
             link = "profile",
+            navController
         )
     }
 }
@@ -56,9 +60,9 @@ fun BottomBarIcon(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     link: String = "home",
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val navController = rememberNavController()
     Column(
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
         modifier = modifier

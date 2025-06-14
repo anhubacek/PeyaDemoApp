@@ -22,11 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.peyademoapp.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel, onLoginSuccess: () -> Unit = {}) {
+fun LoginScreen(
+    viewModel: LoginViewModel,
+    onLoginSuccess: () -> Unit = {},
+    navController: NavController
+) {
     val coroutineScope = rememberCoroutineScope()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
