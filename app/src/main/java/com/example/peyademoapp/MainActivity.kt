@@ -13,10 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.core.model.Product
-import com.example.peyademoapp.data.repository.ProductRepository
+import com.example.peyademoapp.navigation.AppNavigation
 import com.example.peyademoapp.ui.theme.PeyaDemoAppTheme
-import com.example.peyademoapp.view.AppNavigation
-import jakarta.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
@@ -70,7 +68,7 @@ fun ProductsList(products: List<Product>, modifier: Modifier = Modifier) {
             Text(
                 text = "${products[index].name} - \$${products[index].price}",
 
-            )
+                )
         }
     }
 
