@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -23,7 +22,7 @@ import androidx.navigation.compose.rememberNavController
 fun BottomNavBar(
     containerColor: Color = Color.White,
     modifier: Any = Modifier
-        .height(70.dp)
+        .height(80.dp)
         .shadow(
             elevation = 16.dp,
         )
@@ -38,23 +37,19 @@ fun BottomNavBar(
             icon = Icons.Default.Home,
             label = "Inicio",
             link = "home",
-            modifier = Modifier.width(86.dp)
         )
         BottomBarIcon(
             icon = Icons.Default.ShoppingCart,
             label = "Mis pedidos",
             link = "orders",
-            modifier = Modifier.width(86.dp)
         )
         BottomBarIcon(
             icon = Icons.Default.AccountCircle,
             label = "Perfil",
             link = "profile",
-            modifier = Modifier.width(86.dp)
         )
     }
 }
-
 
 @Composable
 fun BottomBarIcon(
@@ -65,10 +60,10 @@ fun BottomBarIcon(
 ) {
     val navController = rememberNavController()
     Column(
-
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
         modifier = modifier
-            .width(80.dp)
+            .width(100.dp)
+            .height(60.dp)
             .clickable {
                 navController.navigate(link) {
                     popUpTo("home") { inclusive = true }
@@ -76,6 +71,8 @@ fun BottomBarIcon(
             }
     ) {
         Icon(imageVector = icon, contentDescription = label, tint = Color.Black)
-        Text(text = label, color = Color.Black)
+        // Text(
+        //   text = label, color = Color.Black
+        //)
     }
 }

@@ -6,8 +6,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.peyademoapp.presentation.HomeScreen
 import com.example.peyademoapp.presentation.LoginScreen
+import com.example.peyademoapp.presentation.ProductsScreen
 import com.example.peyademoapp.presentation.RegisterScreen
 import com.example.peyademoapp.viewmodel.LoginViewModel
 
@@ -19,7 +19,7 @@ fun AppNavigation(
     val loginViewModel: LoginViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = "login",
+        startDestination = "home", // Change to "login" later
         modifier = modifier
     ) {
         composable("login") {
@@ -45,7 +45,7 @@ fun AppNavigation(
             )
         }
         composable("home") {
-            HomeScreen()
+            ProductsScreen()
         }
 
     }

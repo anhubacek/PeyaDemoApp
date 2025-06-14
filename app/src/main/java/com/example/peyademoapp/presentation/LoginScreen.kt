@@ -30,15 +30,12 @@ fun LoginScreen(viewModel: LoginViewModel, onLoginSuccess: () -> Unit = {}) {
     val coroutineScope = rememberCoroutineScope()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val error = viewModel.loginError.collectAsState("")
+    val error = viewModel.loginError.collectAsState("").value
+    val loading = viewModel.loading.collectAsState(false).value
 
-    println(error)
     suspend fun handleLogin() {
         if (viewModel.login(email, password)) {
             onLoginSuccess()
-        } else {
-            println("error en handleLogin")
-            println(error?.value)
         }
     }
     Column(
@@ -60,60 +57,66 @@ fun LoginScreen(viewModel: LoginViewModel, onLoginSuccess: () -> Unit = {}) {
             modifier = Modifier.padding(bottom = 36.dp)
 
         )
-        OutlinedTextField(
-            value = email, onValueChange = { email = it },
-            label = { Text("Correo electrónico") },
-            modifier = Modifier
-                .fillMaxWidth()
 
-        )
+        if (loading) {
+            Loader()
+        } else {
+            OutlinedTextField(
+                value = email, onValueChange = { email = it },
+                label = { Text("Correo electrónico") },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
 
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            visualTransformation = PasswordVisualTransformation(),
-            label = { Text("Contraseña") },
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth()
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                visualTransformation = PasswordVisualTransformation(),
+                label = { Text("Contraseña") },
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth()
 
-        )
+            )
 
 
-        Text(
-            text = error.value,
-            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-            color = Color.Red
-        )
-
-        Button(
-            modifier = Modifier.padding(top = 36.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF51643F),
-                contentColor = Color.White
-            ),
-            onClick = {
-                coroutineScope.launch {
-                    handleLogin()
-                }
-            }
-        ) {
             Text(
-                "Iniciar sesión",
+                text = error,
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                color = Color.Red
+            )
+
+            Button(
+                modifier = Modifier.padding(top = 36.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF51643F),
+                    contentColor = Color.White
+                ),
+                onClick = {
+                    coroutineScope.launch {
+                        handleLogin()
+                    }
+                }
+            ) {
+                Text(
+                    "Iniciar sesión",
+                    fontSize = MaterialTheme.typography.bodyLarge.fontSize
+                )
+            }
+            Text(
+                text = "Aún no estas registrado?",
+                modifier = Modifier.padding(top = 36.dp),
                 fontSize = MaterialTheme.typography.bodyLarge.fontSize
             )
+            Text(
+                text = "Crear una cuenta",
+                modifier = Modifier.padding(top = 8.dp),
+                fontWeight = FontWeight.Bold,
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize
+            )
+
         }
-        Text(
-            text = "Aún no estas registrado?",
-            modifier = Modifier.padding(top = 36.dp),
-            fontSize = MaterialTheme.typography.bodyLarge.fontSize
-        )
-        Text(
-            text = "Crear una cuenta",
-            modifier = Modifier.padding(top = 8.dp),
-            fontWeight = FontWeight.Bold,
-            fontSize = MaterialTheme.typography.bodyLarge.fontSize
-        )
+
 
     }
 
