@@ -2,9 +2,9 @@ package com.example.peyademoapp.data.repository
 
 import com.example.peyademoapp.model.Product
 
-
-class ProductRepository {
-    val products = listOf(
+class ProductRepository(
+) {
+    private val _products = listOf(
         Product(
             "Zapatos",
             2500.0,
@@ -32,10 +32,9 @@ class ProductRepository {
         )
     )
 
-    companion object {
-        fun getProducts(): List<Product> {
-            return ProductRepository().products
-        }
+
+    fun getProducts(): List<Product> {
+        return _products
     }
 }
 

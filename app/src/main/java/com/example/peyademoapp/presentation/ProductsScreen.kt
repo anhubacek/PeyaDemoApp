@@ -23,8 +23,8 @@ import androidx.navigation.NavController
 import com.example.peyademoapp.model.Product
 import com.example.peyademoapp.viewmodel.ProductsViewModel
 
-@Composable
 
+@Composable
 fun ProductsScreen(
     viewModel: ProductsViewModel,
     navController: NavController
