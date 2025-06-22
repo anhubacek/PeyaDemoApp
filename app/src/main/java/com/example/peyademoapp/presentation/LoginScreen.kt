@@ -53,7 +53,7 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "RAÍZ",
+            text = "COCINA",
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(bottom = 6.dp, top = 80.dp)
 

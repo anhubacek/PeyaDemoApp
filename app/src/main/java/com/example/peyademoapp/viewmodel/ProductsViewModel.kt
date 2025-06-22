@@ -25,10 +25,13 @@ class ProductsViewModel : ViewModel() {
     val message = _message
     val productRepository = ProductRepository()
 
+
     val exceptionHndler = CoroutineExceptionHandler { _, exception ->
         _message.value = "Error: ${exception.message}"
         println("Unexpected error: ${exception.message}")
     }
+
+
 
     init {
         viewModelScope.launch(Dispatchers.IO + exceptionHndler) {

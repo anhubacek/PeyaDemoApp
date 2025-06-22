@@ -8,17 +8,17 @@ class CartViewModel : ViewModel() {
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     val cartItems = _cartItems
 
-    fun addItemToCart(item: CartItem) {
-        val existingItem = _cartItems.value.find { it.product.id == item.product.id }
+    fun addToCart(cartItem: CartItem) {
+        val existingItem = _cartItems.value.find { it.product.id == cartItem.product.id }
         if (existingItem != null) {
-            existingItem.quantity += item.quantity
+            existingItem.quantity += cartItem.quantity
             _cartItems.value = _cartItems.value.map {
-                if (it.product.id == item.product.id) existingItem else it
+                if (it.product.id == cartItem.product.id) existingItem else it
             }
         } else {
-            _cartItems.value + item
+            _cartItems.value = _cartItems.value + cartItem
         }
-
-
+        println("cartitems: ${_cartItems.value}")
     }
+
 }

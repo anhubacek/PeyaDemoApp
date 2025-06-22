@@ -4,17 +4,24 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -24,25 +31,34 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.peyademoapp.R
+import com.example.peyademoapp.model.CartItem
 import com.example.peyademoapp.model.Product
+import com.example.peyademoapp.viewmodel.CartViewModel
 import com.example.peyademoapp.viewmodel.ProductsViewModel
 
 @Composable
 fun ProductsScreen(
-    viewModel: ProductsViewModel,
+    productsViewModel: ProductsViewModel,
+    cartViewModel: CartViewModel,
     navController: NavController
 ) {
-    val products = viewModel.filteredProducts.collectAsState().value
+    val coroutineScope = rememberCoroutineScope()
+    val products = productsViewModel.filteredProducts.collectAsState().value
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
@@ -60,11 +76,11 @@ fun ProductsScreen(
                 value = searchQuery,
                 onValueChange = {
                     searchQuery = it
-                    viewModel.filterProducts(searchQuery)
+                    productsViewModel.filterProducts(searchQuery)
                 },
                 placeholder = {
                     Text(text = "Buscar productos", fontSize = 20.sp)
-                              },
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
@@ -78,7 +94,8 @@ fun ProductsScreen(
             )
             ProductsList(
                 products = products,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                cartViewModel = cartViewModel
             )
 
         }
@@ -87,7 +104,11 @@ fun ProductsScreen(
 
 
 @Composable
-fun ProductsList(products: List<Product>, modifier: Modifier = Modifier) {
+fun ProductsList(
+    products: List<Product>,
+    modifier: Modifier = Modifier,
+    cartViewModel: CartViewModel
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = modifier
@@ -98,6 +119,7 @@ fun ProductsList(products: List<Product>, modifier: Modifier = Modifier) {
         items(products.size) { index ->
             ProductItem(
                 product = products[index],
+                cartViewModel = cartViewModel
             )
         }
     }
@@ -106,7 +128,7 @@ fun ProductsList(products: List<Product>, modifier: Modifier = Modifier) {
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun ProductItem(product: Product) {
+fun ProductItem(product: Product, cartViewModel: CartViewModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,16 +143,55 @@ fun ProductItem(product: Product) {
             modifier = Modifier.padding(bottom = 12.dp)
         ) {
 
-            Image(
-                // painter = painterResource(id = R.drawable.your_image)
-                painter = rememberAsyncImagePainter(product.imageUrl),
-                contentDescription = "Imagen del producto",
-                contentScale = ContentScale.Crop,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(180.dp)
-                    .clip(RoundedCornerShape(12.dp))
-            )
+            ) {
+
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = product.imageUrl,
+                        error = painterResource(R.drawable.image_error),
+                        placeholder = painterResource(R.drawable.gray_placeholder)
+
+                    ),
+                    contentDescription = "Imagen del producto",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(12.dp))
+                )
+
+
+                IconButton(
+                    onClick = {
+                        cartViewModel.addToCart(
+                            CartItem(
+                                product = product,
+                                quantity = 1
+                            )
+                        )
+
+
+                    },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .shadow(8.dp, shape = CircleShape, clip = false)
+                        .background(Color(0xFF4CAF50), shape = CircleShape)
+                        .size(30.dp)
+                        .clip(CircleShape)
+
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Agregar al carrito",
+                        tint = Color.White,
+                    )
+
+                }
+            }
 
             Spacer(modifier = Modifier.height(6.dp))
 
@@ -148,12 +209,6 @@ fun ProductItem(product: Product) {
                 modifier = Modifier.padding(horizontal = 6.dp)
             )
 
-
-//            Text(
-//                text = if (product.description.length > 30) product.description.take(30) + "..." else product.description,
-//                fontSize = 12.sp,
-//                modifier = Modifier.padding(horizontal = 12.dp)
-//            )
         }
     }
 }
