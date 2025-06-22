@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -42,8 +43,8 @@ fun BottomNavBar(
         )
         BottomBarIcon(
             icon = Icons.Default.ShoppingCart,
-            label = "Mis pedidos",
-            link = "orders",
+            label = "Mi carrito",
+            link = "cart",
             navController
         )
         BottomBarIcon(

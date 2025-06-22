@@ -10,8 +10,12 @@ import com.example.peyademoapp.presentation.LoginScreen
 import com.example.peyademoapp.presentation.ProductsScreen
 import com.example.peyademoapp.presentation.ProfileScreen
 import com.example.peyademoapp.presentation.RegisterScreen
+import com.example.peyademoapp.presentation.ShoppingCartScreen
+import com.example.peyademoapp.viewmodel.CartViewModel
 import com.example.peyademoapp.viewmodel.LoginViewModel
 import com.example.peyademoapp.viewmodel.ProductsViewModel
+import com.example.peyademoapp.viewmodel.ProfileViewModel
+import com.example.peyademoapp.viewmodel.RegisterViewModel
 
 @Composable
 fun AppNavigation(
@@ -19,20 +23,18 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
     val loginViewModel: LoginViewModel = viewModel()
+    val registerViewModel: RegisterViewModel = viewModel()
     val productsViewModel: ProductsViewModel = viewModel()
+    val cartViewModel: CartViewModel = viewModel()
+    val profileViewModel: ProfileViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = "home", // Change to "login" later
+        startDestination = "login",
         modifier = modifier
     ) {
         composable("login") {
             LoginScreen(
                 loginViewModel,
-                onLoginSuccess = {
-                    navController.navigate("home") {
-                        popUpTo("login") { inclusive = true }
-                    }
-                },
                 navController
 
             )
@@ -40,11 +42,8 @@ fun AppNavigation(
 
         composable("signup") {
             RegisterScreen(
-                onSignUpSuccess = {
-                    navController.navigate("home") {
-                        popUpTo("signup") { inclusive = true }
-                    }
-                }
+                registerViewModel,
+                navController
 
             )
         }
@@ -56,11 +55,13 @@ fun AppNavigation(
         }
         composable("profile") {
             ProfileScreen(
-                onLogout = {
-                    navController.navigate("login") {
-                        popUpTo("home") { inclusive = true }
-                    }
-                },
+                profileViewModel,
+                navController
+            )
+        }
+        composable("cart") {
+            ShoppingCartScreen(
+                cartViewModel,
                 navController
             )
         }

@@ -6,32 +6,38 @@ class ProductRepository(
 ) {
     private val _products = listOf(
         Product(
-            "Zapatos",
-            2500.0,
-            "https://dcdn-us.mitiendanube.com/stores/001/719/894/products/remera_lisa_fucsia11-78c8df7ce5d737624416252554306232-640-0.png"
-        ),
-        com.example.peyademoapp.model.Product(
-            "Camisa", 1900.0,
-            "https://dcdn-us.mitiendanube.com/stores/001/719/894/products/remera_lisa_fucsia11-78c8df7ce5d737624416252554306232-640-0.png"
-        ),
-        Product(
-            "Pantalón", 3200.0,
-            "https://dcdn-us.mitiendanube.com/stores/001/719/894/products/remera_lisa_fucsia11-78c8df7ce5d737624416252554306232-640-0.png"
+            id = "1",
+            name = "Tacos al pastor",
+            price = 45.0,
+            imageUrl = "https://comedera.com/wp-content/uploads/sites/9/2017/08/tacos-al-pastor-receta.jpg",
+            description = "Tortillas con carne de cerdo marinada, piña y cebolla.",
+            hasDrink = true,
         ),
         Product(
-            "Gorra", 1200.0,
-            "https://dcdn-us.mitiendanube.com/stores/001/719/894/products/remera_lisa_fucsia11-78c8df7ce5d737624416252554306232-640-0.png"
+            id = "2",
+            name = "Burrito de res",
+            price = 60.0,
+            imageUrl = "https://www.recetasnestle.com.mx/sites/default/files/srh_recipes/cff9881a271d21ae3d098ba68d5ecd18.jpg",
+            description = "Con arroz, frijoles, carne de res y queso.",
+            hasDrink = false,
         ),
         Product(
-            "Remera", 1500.0,
-            "https://dcdn-us.mitiendanube.com/stores/001/719/894/products/remera_lisa_fucsia11-78c8df7ce5d737624416252554306232-640-0.png"
+            id = "3",
+            name = "Hamburguesa clásica",
+            price = 70.0,
+            imageUrl = "https://imag.bonviveur.com/hamburguesa-clasica.jpg",
+            description = "Pan artesanal, carne de res, lechuga, tomate y mayonesa.",
+            hasDrink = false,
         ),
         Product(
-            "Bufanda", 1100.0,
-            "https://dcdn-us.mitiendanube.com/stores/001/719/894/products/remera_lisa_fucsia11-78c8df7ce5d737624416252554306232-640-0.png"
+            id = "4",
+            name = "Pizza margarita",
+            price = 120.0,
+            imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDx46gfGPL3XKmoiXU_pQzvINxjjOFsXLoAA&s",
+            description = "Salsa de tomate, mozzarella y albahaca fresca.",
+            hasDrink = false,
         )
     )
-
 
     fun getProducts(): List<Product> {
         return _products

@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
 class LoginViewModel : ViewModel(
 ) {
     private val _error = MutableStateFlow("")
-    val loginError: StateFlow<String> = _error
-
     private val _loading = MutableStateFlow(false)
+    val loginError: StateFlow<String> = _error
     val loading: StateFlow<Boolean> = _loading
 
     suspend fun login(email: String, password: String): Boolean {

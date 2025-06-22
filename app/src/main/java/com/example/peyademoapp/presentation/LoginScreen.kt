@@ -1,5 +1,6 @@
 package com.example.peyademoapp.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +30,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
-    onLoginSuccess: () -> Unit = {},
     navController: NavController
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -40,7 +40,9 @@ fun LoginScreen(
 
     suspend fun handleLogin() {
         if (viewModel.login(email, password)) {
-            onLoginSuccess()
+            navController.navigate("home") {
+                popUpTo("login") { inclusive = true }
+            }
         }
     }
     Column(
@@ -113,12 +115,21 @@ fun LoginScreen(
                 modifier = Modifier.padding(top = 36.dp),
                 fontSize = MaterialTheme.typography.bodyLarge.fontSize
             )
+
             Text(
                 text = "Crear una cuenta",
-                modifier = Modifier.padding(top = 8.dp),
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .clickable {
+                        navController.navigate("signup") {
+                            popUpTo("login") { inclusive = true }
+                        }
+                    },
                 fontWeight = FontWeight.Bold,
-                fontSize = MaterialTheme.typography.bodyLarge.fontSize
-            )
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+
+
+                )
 
         }
 
