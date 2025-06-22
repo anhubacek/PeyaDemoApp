@@ -16,8 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,7 +37,7 @@ fun ProductsScreen(
     val coroutineScope = rememberCoroutineScope()
     val products = productsViewModel.filteredProducts.collectAsState().value
     val cartItems = cartViewModel.cartItems.collectAsState().value
-    var searchQuery by remember { mutableStateOf("") }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
         bottomBar = {
@@ -73,8 +73,7 @@ fun ProductsScreen(
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent
-
-                )
+                ),
             )
             ProductsList(
                 products = products,
