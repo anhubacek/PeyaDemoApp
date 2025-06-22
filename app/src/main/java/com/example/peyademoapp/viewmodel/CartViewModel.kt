@@ -21,4 +21,27 @@ class CartViewModel : ViewModel() {
         println("cartitems: ${_cartItems.value}")
     }
 
+    fun decreaseQuantity(cartItem: CartItem) {
+        val existingItem = _cartItems.value.find { it.product.id == cartItem.product.id }
+        if (existingItem != null) {
+            if (existingItem.quantity > 1) {
+                existingItem.quantity -= 1
+                _cartItems.value = _cartItems.value.map {
+                    if (it.product.id == cartItem.product.id) existingItem else it
+                }
+            } else {
+                _cartItems.value = _cartItems.value.filter { it.product.id != cartItem.product.id }
+            }
+        }
+        println("cartitems: ${_cartItems.value}")
+    }
+
+    fun removeFromCart(cartItem: CartItem) {
+        _cartItems.value = _cartItems.value.filter { it.product.id != cartItem.product.id }
+    }
+
+    fun clearCart() {
+        _cartItems.value = emptyList()
+    }
+
 }
