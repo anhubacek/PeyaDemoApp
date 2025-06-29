@@ -1,4 +1,4 @@
-package com.example.peyademoapp.presentation
+package com.example.peyademoapp.ui.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image

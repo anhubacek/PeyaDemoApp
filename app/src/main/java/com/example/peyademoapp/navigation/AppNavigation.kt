@@ -6,11 +6,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.peyademoapp.presentation.LoginScreen
-import com.example.peyademoapp.presentation.ProductsScreen
-import com.example.peyademoapp.presentation.ProfileScreen
-import com.example.peyademoapp.presentation.RegisterScreen
-import com.example.peyademoapp.presentation.ShoppingCartScreen
+import com.example.peyademoapp.ui.screens.LoginScreen
+import com.example.peyademoapp.ui.screens.ProductsScreen
+import com.example.peyademoapp.ui.screens.ProfileScreen
+import com.example.peyademoapp.ui.screens.RegisterScreen
+import com.example.peyademoapp.ui.screens.ShoppingCartScreen
 import com.example.peyademoapp.viewmodel.CartViewModel
 import com.example.peyademoapp.viewmodel.LoginViewModel
 import com.example.peyademoapp.viewmodel.ProductsViewModel
@@ -56,8 +56,8 @@ fun AppNavigation(
         }
         composable("profile") {
             ProfileScreen(
-                profileViewModel,
-                navController
+//                profileViewModel,
+//                navController
             )
         }
         composable("cart") {

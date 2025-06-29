@@ -1,4 +1,4 @@
-package com.example.peyademoapp.presentation
+package com.example.peyademoapp.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.peyademoapp.ui.components.Loader
 import com.example.peyademoapp.viewmodel.RegisterViewModel
 import kotlinx.coroutines.launch
 

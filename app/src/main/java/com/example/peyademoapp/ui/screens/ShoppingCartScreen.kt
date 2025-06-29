@@ -1,4 +1,4 @@
-package com.example.peyademoapp.presentation
+package com.example.peyademoapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.peyademoapp.ui.components.BottomNavBar
+import com.example.peyademoapp.ui.components.CartList
 import com.example.peyademoapp.viewmodel.CartViewModel
 
 @Composable

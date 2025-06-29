@@ -9,7 +9,9 @@ class UserRepository {
             return User(
                 name = "John",
                 lastName = "Doe",
-                email = "test@test.com"
+                email = "johndoe@test.com",
+                nationality = "Argentina",
+                password = "password123"
             )
         }
     }

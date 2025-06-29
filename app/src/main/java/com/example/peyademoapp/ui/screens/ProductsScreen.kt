@@ -1,4 +1,4 @@
-package com.example.peyademoapp.presentation
+package com.example.peyademoapp.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.peyademoapp.model.Product
+import com.example.peyademoapp.ui.components.BottomNavBar
+import com.example.peyademoapp.ui.components.FloatingCart
+import com.example.peyademoapp.ui.components.ProductItem
 import com.example.peyademoapp.viewmodel.CartViewModel
 import com.example.peyademoapp.viewmodel.ProductsViewModel
 

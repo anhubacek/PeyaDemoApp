@@ -44,6 +44,8 @@ class RegisterViewModel : ViewModel() {
                 email = email.trim(),
                 name = name.trim(),
                 lastName = lastName.trim(),
+                nationality = "Argentina",
+                password = password.trim()
             )
             return true
 
