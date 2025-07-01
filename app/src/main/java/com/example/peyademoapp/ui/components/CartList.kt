@@ -10,10 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.peyademoapp.model.CartItem
+import com.example.peyademoapp.viewmodel.CartViewModel
 
 @Composable
 fun CartList(
-    cartItems: List<CartItem>
+    cartItems: List<CartItem>,
+    cartViewModel: CartViewModel
 ) {
     if (cartItems.isEmpty()) {
         Text(
@@ -29,7 +31,7 @@ fun CartList(
 
         ) {
             items(cartItems) { cartItem ->
-                CartItem(cartItem)
+                CartItem(cartItem, cartViewModel)
             }
         }
     }

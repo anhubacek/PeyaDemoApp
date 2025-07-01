@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,11 +30,10 @@ import com.example.peyademoapp.viewmodel.CartViewModel
 
 @Composable
 fun ShoppingCartScreen(
-    viewModel: CartViewModel,
+    cartViewModel: CartViewModel,
     navController: NavController
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val cartItems = viewModel.cartItems.collectAsState().value
+    val cartItems = cartViewModel.cartItems.collectAsState().value
     var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
     val tabs = listOf("Mi carrito", "Mis pedidos")
 
@@ -83,7 +81,7 @@ fun ShoppingCartScreen(
                             fontSize = 20.sp
                         )
                     } else {
-                        CartList(cartItems)
+                        CartList(cartItems, cartViewModel)
                     }
 
                 1 -> {

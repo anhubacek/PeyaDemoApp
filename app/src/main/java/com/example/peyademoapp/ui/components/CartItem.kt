@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
@@ -24,6 +25,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,12 +42,28 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.peyademoapp.R
 import com.example.peyademoapp.model.CartItem
+import com.example.peyademoapp.viewmodel.CartViewModel
 
 @SuppressLint("DefaultLocale")
 @Composable
 fun CartItem(
     cartItem: CartItem,
+    cartViewModel: CartViewModel
 ) {
+    var quantity by rememberSaveable { mutableStateOf(cartItem.quantity) }
+
+    fun onDecreaseQuantity() {
+        if (quantity > 1) {
+            quantity--
+            cartViewModel.updateQuantity(cartItem, quantity)
+        }
+    }
+
+    fun onIncreaseQuantity() {
+        quantity++
+        cartViewModel.updateQuantity(cartItem, quantity)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -105,7 +126,7 @@ fun CartItem(
                     .padding(end = 4.dp, top = 4.dp, bottom = 4.dp)
             ) {
                 IconButton(
-                    onClick = {},
+                    onClick = { onIncreaseQuantity() },
                     modifier = Modifier
                         .clip(RoundedCornerShape(4.dp))
                         .size(30.dp)
@@ -131,7 +152,7 @@ fun CartItem(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = cartItem.quantity.toString(),
+                        text = quantity.toString(),
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
                         textAlign = TextAlign.Center,
@@ -139,7 +160,7 @@ fun CartItem(
                 }
 
                 IconButton(
-                    onClick = { },
+                    onClick = { onDecreaseQuantity() },
                     modifier = Modifier
                         .clip(RoundedCornerShape(4.dp))
                         .size(30.dp)
@@ -157,25 +178,26 @@ fun CartItem(
                     )
                 }
             }
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxHeight()
-//                    .align(Alignment.CenterVertically),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                IconButton(
-//                    onClick = {},
-//                    modifier = Modifier
-//                        .size(30.dp)
-//
-//                ) {
-//                    Icon(
-//                        imageVector = Icons.Default.Delete,
-//                        contentDescription = "Agregar",
-//                        tint = Color.Black,
-//                    )
-//                }
-//            }
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                IconButton(
+                    onClick = { cartViewModel.removeFromCart(cartItem) },
+                    modifier = Modifier
+                        .size(30.dp)
+
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Agregar",
+                        tint = Color.Black,
+                    )
+                }
+            }
 
 
         }

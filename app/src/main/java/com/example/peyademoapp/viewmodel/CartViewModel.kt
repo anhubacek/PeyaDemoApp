@@ -10,33 +10,6 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     //
 ) : ViewModel() {
-    //private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
-//    private val _cartItems = MutableStateFlow<List<CartItem>>(
-//        listOf(
-//            CartItem(
-//                product = Product(
-//                    id = "3",
-//                    name = "Hamburguesa clásica",
-//                    price = 70.0,
-//                    imageUrl = "https://imag.bonviveur.com/hamburguesa-clasica.jpg",
-//                    description = "Pan artesanal, carne de res, lechuga, tomate y mayonesa.",
-//                    hasDrink = false,
-//                ),
-//                quantity = 2
-//            ),
-//            CartItem(
-//                product = Product(
-//                    id = "5",
-//                    name = "Hot dog especial",
-//                    price = 50.0,
-//                    imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaKqDVCWtGQzA2-d1WvRmTfPi0krczx2pwzQ&s",
-//                    description = "Salchicha jumbo, tocino, cebolla caramelizada y mostaza.",
-//                    hasDrink = true,
-//                ),
-//                quantity = 1
-//            )
-//        )
-//    )
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     val cartItems = _cartItems
 
@@ -65,7 +38,6 @@ class CartViewModel @Inject constructor(
                 _cartItems.value = _cartItems.value.filter { it.product.id != cartItem.product.id }
             }
         }
-        println("cartitems: ${_cartItems.value}")
     }
 
     fun removeFromCart(cartItem: CartItem) {
@@ -75,5 +47,18 @@ class CartViewModel @Inject constructor(
     fun clearCart() {
         _cartItems.value = emptyList()
     }
+
+    fun updateQuantity(cartItem: CartItem, newQuantity: Int) {
+        val existingItem = _cartItems.value.find { it.product.id == cartItem.product.id }
+        if (existingItem != null) {
+            if (newQuantity > 0) {
+                existingItem.quantity = newQuantity
+                _cartItems.value = _cartItems.value.map {
+                    if (it.product.id == cartItem.product.id) existingItem else it
+                }
+            }
+        }
+    }
+
 
 }
