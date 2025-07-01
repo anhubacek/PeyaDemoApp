@@ -2,37 +2,42 @@ package com.example.peyademoapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.peyademoapp.model.CartItem
-import com.example.peyademoapp.model.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-class CartViewModel : ViewModel() {
+@HiltViewModel
+class CartViewModel @Inject constructor(
+    //
+) : ViewModel() {
     //private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
-    private val _cartItems = MutableStateFlow<List<CartItem>>(
-        listOf(
-            CartItem(
-                product = Product(
-                    id = "3",
-                    name = "Hamburguesa clásica",
-                    price = 70.0,
-                    imageUrl = "https://imag.bonviveur.com/hamburguesa-clasica.jpg",
-                    description = "Pan artesanal, carne de res, lechuga, tomate y mayonesa.",
-                    hasDrink = false,
-                ),
-                quantity = 2
-            ),
-            CartItem(
-                product = Product(
-                    id = "5",
-                    name = "Hot dog especial",
-                    price = 50.0,
-                    imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaKqDVCWtGQzA2-d1WvRmTfPi0krczx2pwzQ&s",
-                    description = "Salchicha jumbo, tocino, cebolla caramelizada y mostaza.",
-                    hasDrink = true,
-                ),
-                quantity = 1
-            )
-        )
-    )
+//    private val _cartItems = MutableStateFlow<List<CartItem>>(
+//        listOf(
+//            CartItem(
+//                product = Product(
+//                    id = "3",
+//                    name = "Hamburguesa clásica",
+//                    price = 70.0,
+//                    imageUrl = "https://imag.bonviveur.com/hamburguesa-clasica.jpg",
+//                    description = "Pan artesanal, carne de res, lechuga, tomate y mayonesa.",
+//                    hasDrink = false,
+//                ),
+//                quantity = 2
+//            ),
+//            CartItem(
+//                product = Product(
+//                    id = "5",
+//                    name = "Hot dog especial",
+//                    price = 50.0,
+//                    imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaKqDVCWtGQzA2-d1WvRmTfPi0krczx2pwzQ&s",
+//                    description = "Salchicha jumbo, tocino, cebolla caramelizada y mostaza.",
+//                    hasDrink = true,
+//                ),
+//                quantity = 1
+//            )
+//        )
+//    )
+    private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     val cartItems = _cartItems
 
     fun addToCart(cartItem: CartItem) {

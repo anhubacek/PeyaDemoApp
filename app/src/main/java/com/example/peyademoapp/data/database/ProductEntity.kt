@@ -1,4 +1,4 @@
-package com.example.peyademoapp.data
+package com.example.peyademoapp.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,6 +9,6 @@ data class ProductEntity(
     val id: Int = 0,
     val name: String,
     val price: Double,
-    val image: String
+    val imageUrl: String
     // val hasDrike: Boolean
 )

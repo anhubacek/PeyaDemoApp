@@ -29,7 +29,7 @@ fun AppNavigation(
     val profileViewModel: ProfileViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = "cart",
+        startDestination = "login",
         modifier = modifier
     ) {
         composable("login") {
@@ -56,8 +56,8 @@ fun AppNavigation(
         }
         composable("profile") {
             ProfileScreen(
-//                profileViewModel,
-//                navController
+                profileViewModel,
+                navController
             )
         }
         composable("cart") {

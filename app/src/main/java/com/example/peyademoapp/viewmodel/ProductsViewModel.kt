@@ -2,28 +2,28 @@ package com.example.peyademoapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.peyademoapp.data.repository.ProductRepository
+import com.example.peyademoapp.data.ProductsDataSource
 import com.example.peyademoapp.model.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-//
-//@HiltViewModel
-//class ProductsViewModel @Inject constructor(
-//    private val productRepository: ProductRepository
-//) : ViewModel() {
 
-class ProductsViewModel : ViewModel() {
+@HiltViewModel
+class ProductsViewModel @Inject constructor(
+    productsDataSource: ProductsDataSource
+) : ViewModel() {
     private val _products = MutableStateFlow<List<Product>>(emptyList())
-    private val _filteredProducts: MutableStateFlow<List<Product>> = MutableStateFlow(emptyList())
+    private val _filteredProducts: MutableStateFlow<List<Product>> =
+        MutableStateFlow(emptyList())
     val filteredProducts: MutableStateFlow<List<Product>> = _filteredProducts
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery
     private val _message = MutableStateFlow("")
     val message = _message
-    val productRepository = ProductRepository()
 
 
     val exceptionHndler = CoroutineExceptionHandler { _, exception ->
@@ -32,11 +32,10 @@ class ProductsViewModel : ViewModel() {
     }
 
 
-
     init {
         viewModelScope.launch(Dispatchers.IO + exceptionHndler) {
             try {
-                val productList: List<Product> = productRepository.getProducts()
+                val productList: List<Product> = productsDataSource.getProducts()
                 _products.value = productList
                 _filteredProducts.value = productList
 
@@ -49,13 +48,13 @@ class ProductsViewModel : ViewModel() {
     }
 
 
-//    init {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val productList: List<Product> = productRepository.getProducts()
-//            _products.value = productList
-//            _filteredProducts.value = productList
-//        }
-//    }
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            val productList: List<Product> = productsDataSource.getProducts()
+            _products.value = productList
+            _filteredProducts.value = productList
+        }
+    }
 
 
     fun filterProducts(query: String) {

@@ -1,9 +1,12 @@
-package com.example.peyademoapp.data.repository
+package com.example.peyademoapp.data.implementations
 
+import com.example.peyademoapp.data.ProductsDataSource
 import com.example.peyademoapp.model.Product
+import javax.inject.Inject
 
-class ProductRepository(
-) {
+class ProductsDataSourceImplementation
+@Inject constructor(
+) : ProductsDataSource {
     private val _products = listOf(
         Product(
             id = "1",
@@ -71,11 +74,8 @@ class ProductRepository(
         )
     )
 
-    fun getProducts(): List<Product> {
+    override suspend fun getProducts(): List<Product> {
         return _products
+
     }
 }
-
-
-
-

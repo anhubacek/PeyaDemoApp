@@ -1,8 +1,17 @@
+import java.util.Properties
+
 plugins {
+    id("com.google.dagger.hilt.android") version "2.56.2"
+    kotlin("kapt")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")
+}
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
 }
 
 android {
@@ -16,8 +25,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_BASE_URL", "\"${project.properties["API_BASE_URL"]}\"")
-
+        buildConfigField("String", "API_BASE_URL", "\"${localProperties["API_BASE_URL"]}\"")
     }
 
     buildTypes {
@@ -44,8 +52,6 @@ android {
 }
 
 dependencies {
-
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,7 +64,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":library:utils"))
     implementation(project(":feature:cart"))
-    implementation(libs.androidx.navigation.compose.android)
+    implementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,10 +75,19 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    //navigation
+    implementation(libs.androidx.navigation.compose.android)
+    //hilt
     implementation(libs.hilt.android)
-    implementation("androidx.room:room-runtime:2.7.1")
+    implementation("com.google.dagger:hilt-android:2.56.2")
+    kapt("com.google.dagger:hilt-compiler:2.56.2")
+    //room
     kapt("androidx.room:room-compiler:2.7.1")
+    implementation("androidx.room:room-runtime:2.7.1")
     implementation("androidx.room:room-ktx:2.7.1")
+    //coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+    //cloudinary
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
 
 }

@@ -1,6 +1,7 @@
 package com.example.peyademoapp.data
 
 import com.example.peyademoapp.BuildConfig
+import com.example.peyademoapp.data.api.ApiService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

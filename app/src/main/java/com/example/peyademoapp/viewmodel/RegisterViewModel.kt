@@ -1,13 +1,16 @@
 package com.example.peyademoapp.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.peyademoapp.SessionManager
-import com.example.peyademoapp.model.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    //dependencies
+) : ViewModel() {
     private val _error = MutableStateFlow("")
     private val _loading = MutableStateFlow(false)
     val signUpError: StateFlow<String> = _error
@@ -38,15 +41,7 @@ class RegisterViewModel : ViewModel() {
                 _error.value = "Correo electrónico inválido"
                 return false
             }
-            // Simulate a successful sign-up
             delay(2000)
-            SessionManager.loggedUser = User(
-                email = email.trim(),
-                name = name.trim(),
-                lastName = lastName.trim(),
-                nationality = "Argentina",
-                password = password.trim()
-            )
             return true
 
 

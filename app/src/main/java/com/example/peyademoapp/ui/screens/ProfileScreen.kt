@@ -18,15 +18,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,33 +34,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.peyademoapp.ui.components.BottomNavBar
+import com.example.peyademoapp.ui.components.ProfileEdition
+import com.example.peyademoapp.viewmodel.ProfileViewModel
 
 
-@Preview(showBackground = true)
 @Composable
 fun ProfileScreen(
-    // viewModel: ProfileViewModel, navController: NavController
+    viewModel: ProfileViewModel, navController: NavController
 ) {
-//
-//    fun handleLogout() {
-//        if (viewModel.logout()) {
-//            navController.navigate("login") {
-//                popUpTo("home") { inclusive = true }
-//            }
-//        }
-//
-//    }
+
+    fun handleLogout() {
+        if (viewModel.logout()) {
+            navController.navigate("login") {
+                popUpTo("home") { inclusive = true }
+            }
+        }
+
+    }
+
     val imageUri = null
     var editingProfile by rememberSaveable { mutableStateOf(false) }
+    val userProfile = viewModel.userProfile.collectAsState().value
+    fun handleCancelEdition() {
+        editingProfile = false
+    }
 
     Scaffold(
         bottomBar = {
-            //   BottomNavBar(navController)
+            BottomNavBar(navController)
         }
     ) { innerPadding ->
         Column(
@@ -108,7 +112,14 @@ fun ProfileScreen(
             }
             if (editingProfile) {
                 ProfileEdition(
-                    // viewModel = viewModel, navController = navController
+                    viewModel = viewModel, navController = navController,
+                    handleCancelEdition = { handleCancelEdition() },
+                    handleSaveChanges = { data ->
+                        // if save changes returns true, exit editing mode
+                        if (viewModel.handleSaveChanges(data)) {
+                            editingProfile = false
+                        }
+                    }
 
                 )
             } else {
@@ -135,7 +146,7 @@ fun ProfileScreen(
                             fontWeight = MaterialTheme.typography.titleMedium.fontWeight
                         )
                         Text(
-                            text = "John Doe",
+                            text = "${userProfile?.name ?: ""} ${userProfile?.lastName ?: ""}",
                             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                         )
                         Spacer(
@@ -148,7 +159,7 @@ fun ProfileScreen(
                             fontWeight = MaterialTheme.typography.titleMedium.fontWeight
                         )
                         Text(
-                            text = "johndoe@test.com",
+                            text = userProfile?.email ?: "",
                             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                         )
                         Spacer(
@@ -161,7 +172,7 @@ fun ProfileScreen(
                             fontWeight = MaterialTheme.typography.titleMedium.fontWeight
                         )
                         Text(
-                            text = "Argentina",
+                            text = userProfile?.nationality ?: "",
                             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                         )
                         Spacer(
@@ -197,25 +208,18 @@ fun ProfileScreen(
 
                 }
 
-
-
-                Button(
+                Text(
+                    text = "Cerrar sesión",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
                     modifier = Modifier
-                        .padding(top = 36.dp)
+                        .padding(top = 45.dp)
+                        .clickable { handleLogout() }
                         .align(Alignment.CenterHorizontally),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF51643F),
-                        contentColor = Color.White
-                    ),
-                    onClick = {
-                        // handleLogout()
-                    }
-                ) {
-                    Text(
-                        text = "Cerrar sesión",
-                        fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                    fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
+                    style = TextStyle(textDecoration = TextDecoration.Underline),
+
                     )
-                }
+
             }
 
 
@@ -226,133 +230,3 @@ fun ProfileScreen(
 }
 
 
-@Composable
-fun ProfileEdition(
-    // viewModel: ProfileViewModel, navController: NavController
-) {
-
-    var editingPasssword by rememberSaveable { mutableStateOf(false) }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top= 20.dp),
-    ) {
-        OutlinedTextField(
-            value = "", onValueChange = { },
-            label = { Text("Nombre") },
-            modifier = Modifier
-                .fillMaxWidth()
-
-
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        OutlinedTextField(
-            value = "", onValueChange = { },
-            label = { Text("Apellido") },
-            modifier = Modifier
-                .fillMaxWidth()
-
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        OutlinedTextField(
-            value = "", onValueChange = {},
-            label = { Text("Correo electrónico") },
-            modifier = Modifier
-                .fillMaxWidth()
-
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        OutlinedTextField(
-            value = "", onValueChange = {},
-            label = { Text("Nacionalidad") },
-            modifier = Modifier
-                .fillMaxWidth()
-
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-
-        if (editingPasssword) {
-            OutlinedTextField(
-                value = "",
-                onValueChange = { },
-                visualTransformation = PasswordVisualTransformation(),
-                label = { Text("Nueva contraseña") },
-                modifier = Modifier
-                    .fillMaxWidth()
-
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-        }
-
-        OutlinedTextField(
-            value = "",
-            onValueChange = { },
-            visualTransformation = PasswordVisualTransformation(),
-            label = { Text("Confirmar contraseña actual") },
-            modifier = Modifier
-                .fillMaxWidth()
-
-        )
-
-        if (!editingPasssword) {
-            Text(
-                text = "Cambiar contraseña",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                modifier = Modifier
-                    .padding(top = 18.dp)
-                    .clickable { editingPasssword = true },
-                fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-                style = TextStyle(textDecoration = TextDecoration.Underline)
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-
-            ) {
-            Button(
-
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFE0E0E0),
-                    contentColor = Color.Black,
-
-                    ),
-                onClick = {
-                    // go back
-                }
-            ) {
-                Text(
-                    text = "Cancelar",
-                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                )
-            }
-
-            Button(
-//                modifier = Modifier
-//                    .padding(top = 40.dp)
-//                    .align(Alignment.CenterHorizontally),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF51643F),
-                    contentColor = Color.White
-                ),
-                onClick = {
-                    // handleSaveChanges()
-                }
-            ) {
-                Text(
-                    text = "Guardar cambios",
-                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                )
-            }
-
-
-        }
-
-
-    }
-
-
-}

@@ -1,4 +1,4 @@
-package com.example.peyademoapp.data
+package com.example.peyademoapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Delete
