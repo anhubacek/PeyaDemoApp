@@ -90,4 +90,9 @@ dependencies {
     //cloudinary
     implementation("com.cloudinary:cloudinary-android:2.3.1")
 
+    //testing
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:5.11.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+
 }
