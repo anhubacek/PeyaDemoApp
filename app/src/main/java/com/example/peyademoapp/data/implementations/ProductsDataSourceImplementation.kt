@@ -1,7 +1,7 @@
 package com.example.peyademoapp.data.implementations
 
+import com.example.core.model.Product
 import com.example.peyademoapp.data.ProductsDataSource
-import com.example.peyademoapp.model.Product
 import javax.inject.Inject
 
 class ProductsDataSourceImplementation

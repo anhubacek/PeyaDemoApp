@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.core.model.User
 import com.example.peyademoapp.ui.components.BottomNavBar
 import com.example.peyademoapp.ui.components.ProfileEdition
 import com.example.peyademoapp.viewmodel.ProfileViewModel
@@ -114,7 +115,7 @@ fun ProfileScreen(
                 ProfileEdition(
                     viewModel = viewModel, navController = navController,
                     handleCancelEdition = { handleCancelEdition() },
-                    handleSaveChanges = { data ->
+                    handleSaveChanges = { data: User ->
                         // if save changes returns true, exit editing mode
                         if (viewModel.handleSaveChanges(data)) {
                             editingProfile = false

@@ -26,5 +26,5 @@ rootProject.name = "PeyaDemoApp"
 include(":app")
 include(":feature:cart")
 include(":core:model")
-include(":data")
 include(":library:utils")
+include(":data")

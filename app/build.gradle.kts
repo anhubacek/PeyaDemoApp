@@ -61,7 +61,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(project(":core:model"))
-    implementation(project(":data"))
     implementation(project(":library:utils"))
     implementation(project(":feature:cart"))
     implementation(libs.androidx.espresso.core)

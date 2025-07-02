@@ -40,8 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.core.model.CartItem
 import com.example.peyademoapp.R
-import com.example.peyademoapp.model.CartItem
 import com.example.peyademoapp.viewmodel.CartViewModel
 
 @SuppressLint("DefaultLocale")

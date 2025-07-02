@@ -38,7 +38,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(project(":core:model"))
-    implementation(project(":data"))
     implementation(project(":library:utils"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

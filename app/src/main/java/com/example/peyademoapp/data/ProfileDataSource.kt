@@ -1,6 +1,6 @@
 package com.example.peyademoapp.data
 
-import com.example.peyademoapp.model.User
+import com.example.core.model.User
 
 interface ProfileDataSource {
     fun getProfileData(): User

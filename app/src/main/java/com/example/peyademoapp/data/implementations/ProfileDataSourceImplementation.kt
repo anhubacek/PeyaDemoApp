@@ -1,7 +1,7 @@
 package com.example.peyademoapp.data.implementations
 
+import com.example.core.model.User
 import com.example.peyademoapp.data.ProfileDataSource
-import com.example.peyademoapp.model.User
 import javax.inject.Inject
 
 class ProfileDataSourceImplementation

@@ -1,7 +1,7 @@
 package com.example.peyademoapp.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.peyademoapp.model.CartItem
+import com.example.core.model.CartItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
