@@ -56,7 +56,7 @@ fun RegisterScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "RAÍZ URBANA",
+            text = "COCINA URBANA",
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(vertical = 36.dp)
 
