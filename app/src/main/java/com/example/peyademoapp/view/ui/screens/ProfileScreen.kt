@@ -29,7 +29,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -102,25 +101,6 @@ fun ProfileScreen(
                 .fillMaxWidth(),
         ) {
 
-//            if (isImageUploading) {
-//                AlertDialog(
-//                    onDismissRequest = {},
-//                    confirmButton = {},
-//                    dismissButton = {},
-//                    title = { Text(text = "Subiendo imagen") },
-//                    text = {
-//                        Column(
-//                            modifier = Modifier.fillMaxWidth()
-//
-//                        ) {
-//                            CircularProgressIndicator()
-//                        }
-//                    },
-//
-//                    )
-//
-//            }
-
             if (imageUri != null) {
                 val bitmap = remember(imageUri) {
                     val source = ImageDecoder.createSource(context.contentResolver, imageUri!!)
@@ -131,7 +111,12 @@ fun ProfileScreen(
                     onDismissRequest = {},
                     confirmButton = {},
                     dismissButton = {},
-                    title = { Text(text = "Imagen de perfil") },
+                    title = {
+                        Text(
+                            text = "Confirmar foto de perfil",
+                            fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                        )
+                    },
                     text = {
                         Column(
                             modifier = Modifier
@@ -211,6 +196,44 @@ fun ProfileScreen(
 
                     )
             }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Mi Perfil",
+                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                    fontWeight = MaterialTheme.typography.titleLarge.fontWeight
+                )
+                if (editingProfile.not()) {
+                    Row(
+                        modifier = Modifier
+                            .clickable { editingProfile = true }
+                            .padding(8.dp),
+                    ) {
+                        Text(
+                            text = "Editar",
+                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                            modifier = Modifier
+                                .padding(end = 8.dp),
+                            fontWeight = MaterialTheme.typography.titleSmall.fontWeight
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = "Editar perfil",
+                            modifier = Modifier.size(20.dp)
+                        )
+
+                    }
+                }
+
+
+            }
+
+
 
             Box(
                 modifier = Modifier
@@ -325,7 +348,6 @@ fun ProfileScreen(
                             modifier = Modifier.height(20.dp)
                         )
 
-
                     }
                     Column(
                         modifier = Modifier
@@ -334,21 +356,6 @@ fun ProfileScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Top
                     ) {
-
-                        IconButton(
-                            onClick = { editingProfile = true },
-                            modifier = Modifier
-                                .align(Alignment.Start)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = "Editar perfil",
-                                modifier = Modifier
-                                    .padding(top = 16.dp)
-
-                            )
-                        }
-
                     }
 
 
