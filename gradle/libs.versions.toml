@@ -16,6 +16,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 navigationComposeJvmstubs = "2.9.0"
 navigationComposeAndroid = "2.9.0"
+engageCore = "1.5.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
 androidx-navigation-compose-android = { group = "androidx.navigation", name = "navigation-compose-android", version.ref = "navigationComposeAndroid" }
+engage-core = { group = "com.google.android.engage", name = "engage-core", version.ref = "engageCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

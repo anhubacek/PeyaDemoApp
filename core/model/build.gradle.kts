@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.core.model"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 27
@@ -29,6 +29,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+
+    buildFeatures {
+        buildConfig = true
+
     }
 }
 

@@ -6,16 +6,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.peyademoapp.ui.screens.LoginScreen
-import com.example.peyademoapp.ui.screens.ProductsScreen
-import com.example.peyademoapp.ui.screens.ProfileScreen
-import com.example.peyademoapp.ui.screens.RegisterScreen
-import com.example.peyademoapp.ui.screens.ShoppingCartScreen
-import com.example.peyademoapp.viewmodel.CartViewModel
-import com.example.peyademoapp.viewmodel.LoginViewModel
-import com.example.peyademoapp.viewmodel.ProductsViewModel
-import com.example.peyademoapp.viewmodel.ProfileViewModel
-import com.example.peyademoapp.viewmodel.RegisterViewModel
+import com.example.peyademoapp.view.ui.screens.LoginScreen
+import com.example.peyademoapp.view.ui.screens.ProductsScreen
+import com.example.peyademoapp.view.ui.screens.ProfileScreen
+import com.example.peyademoapp.view.ui.screens.RegisterScreen
+import com.example.peyademoapp.view.ui.screens.ShoppingCartScreen
+import com.example.peyademoapp.view.viewmodel.CartViewModel
+import com.example.peyademoapp.view.viewmodel.LoginViewModel
+import com.example.peyademoapp.view.viewmodel.ProductsViewModel
+import com.example.peyademoapp.view.viewmodel.ProfileViewModel
+import com.example.peyademoapp.view.viewmodel.RegisterViewModel
 
 @Composable
 fun AppNavigation(
@@ -29,7 +29,7 @@ fun AppNavigation(
     val profileViewModel: ProfileViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = "login",
+        startDestination = "profile",
         modifier = modifier
     ) {
         composable("login") {
@@ -57,7 +57,7 @@ fun AppNavigation(
         composable("profile") {
             ProfileScreen(
                 profileViewModel,
-                navController
+                navController,
             )
         }
         composable("cart") {

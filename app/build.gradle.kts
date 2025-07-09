@@ -26,6 +26,27 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_BASE_URL", "\"${localProperties["API_BASE_URL"]}\"")
+        buildConfigField(
+            "String",
+            "CLOUDINARY_CLOUD_NAME",
+            "\"${localProperties["CLOUDINARY_CLOUD_NAME"]}\""
+        )
+        buildConfigField(
+            "String",
+            "CLOUDINARY_API_KEY",
+            "\"${localProperties["CLOUDINARY_API_KEY"]}\""
+        )
+        buildConfigField(
+            "String",
+            "CLOUDINARY_API_SECRET",
+            "\"${localProperties["CLOUDINARY_API_SECRET"]}\""
+        )
+        buildConfigField(
+            "String",
+            "CLOUDINARY_PRESET_NAME",
+            "\"${localProperties["CLOUDINARY_PRESET_NAME"]}\""
+        )
+
     }
 
     buildTypes {
@@ -61,6 +82,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(project(":core:model"))
+    implementation(project(":data:remote"))
+    implementation(project(":data:local"))
     implementation(project(":library:utils"))
     implementation(project(":feature:cart"))
     implementation(libs.androidx.espresso.core)
@@ -93,5 +116,11 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:5.11.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+    testImplementation("io.mockk:mockk:1.13.5")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
+    // EncryptedSharedPreferences
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    //PreferencesDataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.7")
 }
