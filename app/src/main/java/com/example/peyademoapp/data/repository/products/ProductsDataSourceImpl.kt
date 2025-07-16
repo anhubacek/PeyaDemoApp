@@ -75,6 +75,6 @@ class ProductsDataSourceImpl
         )
     )
 
-    override suspend fun getProducts(): List<Product> = _products
+    override suspend fun getProducts(): List<Product> = apiService.getProducts()
 
 }
