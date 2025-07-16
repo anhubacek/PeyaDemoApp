@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.core.model.Product
+import com.example.peyademoapp.model.Product
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.FloatingCart
 import com.example.peyademoapp.view.ui.components.ProductItem

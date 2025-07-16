@@ -2,8 +2,8 @@ package com.example.peyademoapp.view.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.model.Product
-import com.example.data.local.repository.products.ProductsDataSource
+import com.example.peyademoapp.data.repository.products.ProductsDataSource
+import com.example.peyademoapp.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers

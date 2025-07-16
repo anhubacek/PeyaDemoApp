@@ -24,9 +24,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "PeyaDemoApp"
 include(":app")
-include(":feature:cart")
-include(":core:model")
-include(":library:utils")
-include(":data")
-include(":data:local")
-include(":data:remote")

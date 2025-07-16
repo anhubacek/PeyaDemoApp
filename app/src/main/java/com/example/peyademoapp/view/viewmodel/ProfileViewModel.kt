@@ -6,9 +6,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.cloudinary.Cloudinary
-import com.example.core.model.User
-import com.example.data.local.repository.profile.ProfileDataSource
 import com.example.peyademoapp.BuildConfig
+import com.example.peyademoapp.data.repository.users.UsersDataSource
+
+import com.example.peyademoapp.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileDataSource: ProfileDataSource,
+    private val usersDataSource: UsersDataSource,
     val myApplication: Application, application: Application
 ) : AndroidViewModel(application) {
 
@@ -44,10 +45,10 @@ class ProfileViewModel @Inject constructor(
         loadUserProfile()
     }
 
-    fun loadUserProfile() {
+    private fun loadUserProfile() {
         _loading.value = true
         try {
-            val user = profileDataSource.getProfileData()
+            val user = usersDataSource.getProfileData()
             _userProfile.value = user
             _error.value = ""
         } catch (e: Exception) {

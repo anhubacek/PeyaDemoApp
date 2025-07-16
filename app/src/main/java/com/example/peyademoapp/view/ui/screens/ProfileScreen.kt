@@ -52,8 +52,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.core.model.User
 import com.example.peyademoapp.R
+import com.example.peyademoapp.model.User
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.ProfileEdition
 import com.example.peyademoapp.view.viewmodel.ProfileViewModel
