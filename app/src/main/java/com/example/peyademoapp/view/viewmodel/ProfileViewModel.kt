@@ -102,7 +102,7 @@ class ProfileViewModel @Inject constructor(
 
     fun handleSaveChanges(data: User): Boolean {
         try {
-            if (data.name.isBlank() || data.lastName.isBlank() || data.email.isBlank() || data.password.isBlank() || data.nationality.isBlank()) {
+            if (data.name.isBlank() || data.lastName.isBlank() || data.email.isBlank() || data.password.isBlank()) {
                 _error.value = "Completa todos los campos para continuar."
                 return false
             }

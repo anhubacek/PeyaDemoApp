@@ -14,11 +14,11 @@ class CartViewModel @Inject constructor(
     val cartItems = _cartItems
 
     fun addToCart(cartItem: CartItem) {
-        val existingItem = _cartItems.value.find { it.product.id == cartItem.product.id }
+        val existingItem = _cartItems.value.find { it.product._id == cartItem.product._id }
         if (existingItem != null) {
             existingItem.quantity += cartItem.quantity
             _cartItems.value = _cartItems.value.map {
-                if (it.product.id == cartItem.product.id) existingItem else it
+                if (it.product._id == cartItem.product._id) existingItem else it
             }
         } else {
             _cartItems.value = _cartItems.value + cartItem
@@ -27,21 +27,22 @@ class CartViewModel @Inject constructor(
     }
 
     fun decreaseQuantity(cartItem: CartItem) {
-        val existingItem = _cartItems.value.find { it.product.id == cartItem.product.id }
+        val existingItem = _cartItems.value.find { it.product._id == cartItem.product._id }
         if (existingItem != null) {
             if (existingItem.quantity > 1) {
                 existingItem.quantity -= 1
                 _cartItems.value = _cartItems.value.map {
-                    if (it.product.id == cartItem.product.id) existingItem else it
+                    if (it.product._id == cartItem.product._id) existingItem else it
                 }
             } else {
-                _cartItems.value = _cartItems.value.filter { it.product.id != cartItem.product.id }
+                _cartItems.value =
+                    _cartItems.value.filter { it.product._id != cartItem.product._id }
             }
         }
     }
 
     fun removeFromCart(cartItem: CartItem) {
-        _cartItems.value = _cartItems.value.filter { it.product.id != cartItem.product.id }
+        _cartItems.value = _cartItems.value.filter { it.product._id != cartItem.product._id }
     }
 
     fun clearCart() {
@@ -49,12 +50,12 @@ class CartViewModel @Inject constructor(
     }
 
     fun updateQuantity(cartItem: CartItem, newQuantity: Int) {
-        val existingItem = _cartItems.value.find { it.product.id == cartItem.product.id }
+        val existingItem = _cartItems.value.find { it.product._id == cartItem.product._id }
         if (existingItem != null) {
             if (newQuantity > 0) {
                 existingItem.quantity = newQuantity
                 _cartItems.value = _cartItems.value.map {
-                    if (it.product.id == cartItem.product.id) existingItem else it
+                    if (it.product._id == cartItem.product._id) existingItem else it
                 }
             }
         }

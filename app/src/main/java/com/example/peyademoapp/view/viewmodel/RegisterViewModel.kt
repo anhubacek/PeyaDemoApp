@@ -1,15 +1,16 @@
 package com.example.peyademoapp.view.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.peyademoapp.data.repository.users.UsersDataSource
+import com.example.peyademoapp.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    //dependencies
+    private val usersDataSource: UsersDataSource
 ) : ViewModel() {
     private val _error = MutableStateFlow("")
     private val _loading = MutableStateFlow(false)
@@ -41,12 +42,18 @@ class RegisterViewModel @Inject constructor(
                 _error.value = "Correo electrónico inválido"
                 return false
             }
-            delay(2000)
+            usersDataSource.createUser(
+                User(
+                    name = name.trim(),
+                    lastName = lastName.trim(),
+                    email = email.trim(),
+                    password = password,
+                )
+            )
             return true
 
-
         } catch (e: Exception) {
-            _error.value = "Error al crear el usuario"
+            _error.value = "Error al crear el usuario: ${e.message}"
             _loading.value = false
             return false
         } finally {

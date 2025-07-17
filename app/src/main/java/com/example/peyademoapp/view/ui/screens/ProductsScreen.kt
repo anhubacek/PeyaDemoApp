@@ -1,12 +1,9 @@
 package com.example.peyademoapp.view.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,10 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.peyademoapp.model.Product
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.FloatingCart
-import com.example.peyademoapp.view.ui.components.ProductItem
+import com.example.peyademoapp.view.ui.components.ProductsList
 import com.example.peyademoapp.view.viewmodel.CartViewModel
 import com.example.peyademoapp.view.viewmodel.ProductsViewModel
 
@@ -94,26 +90,5 @@ fun ProductsScreen(
 }
 
 
-@Composable
-fun ProductsList(
-    products: List<Product>,
-    modifier: Modifier = Modifier,
-    cartViewModel: CartViewModel
-) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(products.size) { index ->
-            ProductItem(
-                product = products[index],
-                cartViewModel = cartViewModel
-            )
-        }
-    }
 
-}
 
