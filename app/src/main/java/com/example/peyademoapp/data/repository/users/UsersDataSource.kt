@@ -14,7 +14,11 @@ interface UsersDataSource {
 
     suspend fun loginUser(loginRequest: LoginRequest): LoginResponse
 
-    suspend fun saveUserEmail(email: String)
+    suspend fun storeUserEmail(email: String)
 
     suspend fun getStoredEmail(): String
+
+    suspend fun removeStoredEmail()
+
+    suspend fun updateUser(email: String, user: User): User
 }

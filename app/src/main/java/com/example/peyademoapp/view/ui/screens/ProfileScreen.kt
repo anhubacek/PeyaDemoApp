@@ -51,6 +51,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.peyademoapp.R
@@ -58,6 +59,7 @@ import com.example.peyademoapp.model.User
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.ProfileEdition
 import com.example.peyademoapp.view.viewmodel.ProfileViewModel
+import kotlinx.coroutines.launch
 
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -69,7 +71,7 @@ fun ProfileScreen(
     LaunchedEffect(Unit) {
         viewModel.loadUserProfile()
     }
-    
+
     fun handleLogout() {
         if (viewModel.logout()) {
             navController.navigate("login") {
@@ -88,11 +90,23 @@ fun ProfileScreen(
         editingProfile = false
     }
 
+    val viewModelScope = viewModel.viewModelScope
+
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
     ) { uri: Uri? ->
         imageUri = uri
     }
+
+    fun onSaveChanges(user: User) {
+        viewModelScope.launch {
+            val success = viewModel.handleSaveChanges(user)
+            if (success) {
+                handleCancelEdition()
+            }
+        }
+    }
+
 
     Scaffold(
         bottomBar = {
@@ -289,11 +303,9 @@ fun ProfileScreen(
                     viewModel = viewModel, navController = navController,
                     handleCancelEdition = { handleCancelEdition() },
                     handleSaveChanges = { data: User ->
-                        // if save changes returns true, exit editing mode
-                        if (viewModel.handleSaveChanges(data)) {
-                            editingProfile = false
-                        }
+                        onSaveChanges(data)
                     }
+
 
                 )
             } else {

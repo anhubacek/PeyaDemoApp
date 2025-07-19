@@ -7,6 +7,7 @@ import com.example.peyademoapp.model.User
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
     @GET("foods")
@@ -23,5 +24,9 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): LoginResponse
 
-
+    @PUT("users/update/{email}")
+    suspend fun updateUser(
+        @retrofit2.http.Path("email") email: String,
+        @Body user: User
+    ): User
 }

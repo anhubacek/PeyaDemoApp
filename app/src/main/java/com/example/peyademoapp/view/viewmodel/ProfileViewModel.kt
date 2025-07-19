@@ -63,6 +63,9 @@ class ProfileViewModel @Inject constructor(
 
     fun logout(): Boolean {
         try {
+            viewModelScope.launch {
+                usersDataSource.removeStoredEmail()
+            }
             _userProfile.value = null
             return true
         } catch (e: Exception) {
@@ -83,8 +86,20 @@ class ProfileViewModel @Inject constructor(
                     )
                 val imageUrl = result["secure_url"] as String
 
-                val updatedUser = _userProfile.value?.copy(image = imageUrl)
-                _userProfile.value = updatedUser
+                val updatedUser = usersDataSource.updateUser(
+                    _userProfile.value?.email ?: "",
+                    User(
+                        name = _userProfile.value?.name ?: "",
+                        lastName = _userProfile.value?.lastName ?: "",
+                        email = _userProfile.value?.email ?: "",
+                        password = _userProfile.value?.password ?: "",
+                        image = imageUrl,
+                    )
+
+                )
+                if (updatedUser.image == imageUrl) {
+                    _userProfile.value = updatedUser
+                }
 
                 _error.value = ""
             } catch (e: Exception) {
@@ -103,18 +118,22 @@ class ProfileViewModel @Inject constructor(
     }
 
 
-    fun handleSaveChanges(data: User): Boolean {
+    suspend fun handleSaveChanges(data: User): Boolean {
         try {
             if (data.name.isBlank() || data.lastName.isBlank() || data.email.isBlank() || data.password.isBlank()) {
                 _error.value = "Completa todos los campos para continuar."
                 return false
             }
-            val updatedUser = User(
-                name = data.name,
-                lastName = data.lastName,
-                email = data.email,
-                password = data.password,
-                nationality = data.nationality
+            val updatedUser = usersDataSource.updateUser(
+                _userProfile.value?.email ?: "",
+                User(
+                    name = data.name.trim(),
+                    lastName = data.lastName.trim(),
+                    email = data.email.trim(),
+                    password = data.password.trim(),
+                    nationality = data.nationality?.trim(),
+                    image = _userProfile.value?.image ?: "",
+                )
             )
             _userProfile.value = updatedUser
             return true

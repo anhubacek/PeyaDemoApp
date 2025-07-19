@@ -19,9 +19,7 @@ class UsersDataSourceImpl
     private val apiService: ApiService
 ) : UsersDataSource {
 
-
     private val EMAIL_KEY = stringPreferencesKey("email")
-
 
     override suspend fun createUser(user: User): User {
         return apiService.createUser(user)
@@ -36,10 +34,9 @@ class UsersDataSourceImpl
         return apiService.loginUser(
             loginRequest
         )
-
     }
 
-    override suspend fun saveUserEmail(email: String) {
+    override suspend fun storeUserEmail(email: String) {
         context.dataStore.edit { prefs ->
             prefs[EMAIL_KEY] = email
         }
@@ -49,5 +46,16 @@ class UsersDataSourceImpl
         val prefs = context.dataStore.data.first()
         return prefs[EMAIL_KEY] ?: ""
     }
+
+    override suspend fun removeStoredEmail() {
+        context.dataStore.edit { prefs ->
+            prefs.remove(EMAIL_KEY)
+        }
+    }
+
+    override suspend fun updateUser(email: String, user: User): User {
+        return apiService.updateUser(email, user)
+    }
+
 
 }

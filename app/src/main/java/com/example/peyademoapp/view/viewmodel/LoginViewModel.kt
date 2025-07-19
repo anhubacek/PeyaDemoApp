@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
             )
 
             if (response.user.email.isNotBlank()) {
-                usersDataSource.saveUserEmail(response.user.email.trim())
+                usersDataSource.storeUserEmail(response.user.email.trim())
                 return true
             } else {
                 _error.value = "Error al iniciar sesión: ${response.message}"
