@@ -35,7 +35,14 @@ class LoginViewModel @Inject constructor(
                     password = password.trim()
                 )
             )
-            return response.user.email.isNotBlank()
+
+            if (response.user.email.isNotBlank()) {
+                usersDataSource.saveUserEmail(response.user.email.trim())
+                return true
+            } else {
+                _error.value = "Error al iniciar sesión: ${response.message}"
+                return false
+            }
         } catch (e: Exception) {
             _error.value = e.message ?: "Error de conexión"
             _loading.value = false

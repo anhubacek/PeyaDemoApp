@@ -41,14 +41,17 @@ class ProfileViewModel @Inject constructor(
         )
     )
 
-    init {
-        loadUserProfile()
-    }
+//    init {
+//        viewModelScope.launch { loadUserProfile() }
+//    }
 
-    private fun loadUserProfile() {
+    suspend fun loadUserProfile() {
         _loading.value = true
         try {
-            val user = usersDataSource.getProfileData()
+            val userEmail = usersDataSource.getStoredEmail()
+            val user = usersDataSource.getUserByEmail(
+                userEmail
+            )
             _userProfile.value = user
             _error.value = ""
         } catch (e: Exception) {

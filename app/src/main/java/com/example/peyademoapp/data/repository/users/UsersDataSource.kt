@@ -7,11 +7,14 @@ import com.example.peyademoapp.model.User
 
 
 interface UsersDataSource {
-    fun getProfileData(): User
 
     suspend fun createUser(user: User): User
 
     suspend fun getUserByEmail(email: String): User
 
     suspend fun loginUser(loginRequest: LoginRequest): LoginResponse
+
+    suspend fun saveUserEmail(email: String)
+
+    suspend fun getStoredEmail(): String
 }

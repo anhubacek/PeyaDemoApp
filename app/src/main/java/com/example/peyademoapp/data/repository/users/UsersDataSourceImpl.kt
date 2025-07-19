@@ -1,27 +1,27 @@
 package com.example.peyademoapp.data.repository.users
 
+import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.peyademoapp.data.local.dataStore
 import com.example.peyademoapp.data.remote.api.ApiService
 import com.example.peyademoapp.model.LoginRequest
 import com.example.peyademoapp.model.LoginResponse
 import com.example.peyademoapp.model.User
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 
 class UsersDataSourceImpl
 @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val apiService: ApiService
 ) : UsersDataSource {
-    private val _userProfile = User(
-        name = "Andrea",
-        lastName = "Hubacek",
-        email = "test@test.com",
-        nationality = "Argentina",
-        password = "12345678"
-    )
 
-    override fun getProfileData(): User {
-        return _userProfile
-    }
+
+    private val EMAIL_KEY = stringPreferencesKey("email")
+
 
     override suspend fun createUser(user: User): User {
         return apiService.createUser(user)
@@ -38,4 +38,16 @@ class UsersDataSourceImpl
         )
 
     }
+
+    override suspend fun saveUserEmail(email: String) {
+        context.dataStore.edit { prefs ->
+            prefs[EMAIL_KEY] = email
+        }
+    }
+
+    override suspend fun getStoredEmail(): String {
+        val prefs = context.dataStore.data.first()
+        return prefs[EMAIL_KEY] ?: ""
+    }
+
 }

@@ -29,7 +29,7 @@ fun AppNavigation(
     val profileViewModel: ProfileViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = "profile",
+        startDestination = "login",
         modifier = modifier
     ) {
         composable("login") {
