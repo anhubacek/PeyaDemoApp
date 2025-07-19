@@ -1,5 +1,7 @@
 package com.example.peyademoapp.data.remote.api
 
+import com.example.peyademoapp.model.LoginRequest
+import com.example.peyademoapp.model.LoginResponse
 import com.example.peyademoapp.model.Product
 import com.example.peyademoapp.model.User
 import retrofit2.http.Body
@@ -13,6 +15,13 @@ interface ApiService {
     @POST("users/register")
     suspend fun createUser(@Body user: User): User
 
-    @GET("users/{id}")
-    suspend fun getUserById(@retrofit2.http.Path("id") id: Int): User
+    @GET("users/{email}")
+    suspend fun getUserByEmail(@retrofit2.http.Path("email") email: String): User
+
+    @POST("users/login")
+    suspend fun loginUser(
+        @Body loginRequest: LoginRequest
+    ): LoginResponse
+
+
 }

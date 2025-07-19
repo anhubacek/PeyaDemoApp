@@ -1,6 +1,8 @@
 package com.example.peyademoapp.data.repository.users
 
 import com.example.peyademoapp.data.remote.api.ApiService
+import com.example.peyademoapp.model.LoginRequest
+import com.example.peyademoapp.model.LoginResponse
 import com.example.peyademoapp.model.User
 import javax.inject.Inject
 
@@ -22,8 +24,18 @@ class UsersDataSourceImpl
     }
 
     override suspend fun createUser(user: User): User {
-        val newUser = apiService.createUser(user)
-        return newUser
+        return apiService.createUser(user)
+
     }
 
+    override suspend fun getUserByEmail(email: String): User {
+        return apiService.getUserByEmail(email)
+    }
+
+    override suspend fun loginUser(loginRequest: LoginRequest): LoginResponse {
+        return apiService.loginUser(
+            loginRequest
+        )
+
+    }
 }
