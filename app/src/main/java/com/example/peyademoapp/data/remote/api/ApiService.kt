@@ -2,6 +2,8 @@ package com.example.peyademoapp.data.remote.api
 
 import com.example.peyademoapp.model.LoginRequest
 import com.example.peyademoapp.model.LoginResponse
+import com.example.peyademoapp.model.Order
+import com.example.peyademoapp.model.OrderRequest
 import com.example.peyademoapp.model.Product
 import com.example.peyademoapp.model.User
 import retrofit2.http.Body
@@ -29,4 +31,14 @@ interface ApiService {
         @retrofit2.http.Path("email") email: String,
         @Body user: User
     ): User
+
+    @POST("orders")
+    suspend fun createOrder(
+        @Body orderRequest: OrderRequest
+    ): List<Order>
+
+    @GET("orders/user/{email}")
+    suspend fun getOrdersByUserEmail(
+        @retrofit2.http.Path("email") email: String
+    ): List<Order>
 }

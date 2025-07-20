@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.CartList
+import com.example.peyademoapp.view.ui.components.CartResume
+import com.example.peyademoapp.view.ui.components.OrdersHistory
 import com.example.peyademoapp.view.viewmodel.CartViewModel
 
 @Composable
@@ -34,9 +37,14 @@ fun ShoppingCartScreen(
     navController: NavController
 ) {
     val cartItems = cartViewModel.cartItems.collectAsState().value
+    val orders = cartViewModel.orders.collectAsState().value
+    val isLoadingOrders = cartViewModel.isLoadingOrders.collectAsState().value
     var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
     val tabs = listOf("Mi carrito", "Mis pedidos")
 
+    LaunchedEffect(Unit) {
+        cartViewModel.loadOrders()
+    }
     Scaffold(
         bottomBar = {
             BottomNavBar(navController)
@@ -81,20 +89,40 @@ fun ShoppingCartScreen(
                             fontSize = 20.sp
                         )
                     } else {
-                        CartList(cartItems, cartViewModel)
+                        Column {
+                            CartList(cartItems, cartViewModel)
+                            CartResume(cartItems, cartViewModel, handleChangeViewToOrders = {
+                                selectedTabIndex = 1
+                            })
+
+                        }
+
                     }
 
                 1 -> {
+                    if (isLoadingOrders) {
+                        Text(
+                            text = "Cargando pedidos...",
+                            modifier = Modifier.padding(16.dp),
+                            fontSize = 20.sp
+                        )
+                    } else {
+                        if (orders.isNotEmpty()) {
+                            OrdersHistory(
+                                orders = orders,
+                                modifier = Modifier.padding(16.dp)
+                            )
 
-                    Text(
-                        text = "No tienes pedidos aún",
-                        modifier = Modifier.padding(16.dp),
-                        fontSize = 20.sp
-                    )
+                        } else {
+                            Text(
+                                text = "No tienes pedidos aún",
+                                modifier = Modifier.padding(16.dp),
+                                fontSize = 20.sp
+                            )
+                        }
+                    }
                 }
             }
         }
-
-
     }
 }

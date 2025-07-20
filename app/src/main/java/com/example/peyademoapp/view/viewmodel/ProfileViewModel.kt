@@ -41,10 +41,6 @@ class ProfileViewModel @Inject constructor(
         )
     )
 
-//    init {
-//        viewModelScope.launch { loadUserProfile() }
-//    }
-
     suspend fun loadUserProfile() {
         _loading.value = true
         try {
@@ -73,7 +69,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-
     private fun uploadProfileImage(uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
             _isImageUploading.value = true
@@ -100,7 +95,6 @@ class ProfileViewModel @Inject constructor(
                 if (updatedUser.image == imageUrl) {
                     _userProfile.value = updatedUser
                 }
-
                 _error.value = ""
             } catch (e: Exception) {
                 _error.value = "Error uploading image: ${e.message}"
