@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.CartList
 import com.example.peyademoapp.view.ui.components.CartResume
+import com.example.peyademoapp.view.ui.components.Loader
 import com.example.peyademoapp.view.viewmodel.CartViewModel
 
 @Composable
@@ -101,11 +102,7 @@ fun ShoppingCartScreen(
 
                 1 -> {
                     if (isLoadingOrders) {
-                        Text(
-                            text = "Cargando pedidos...",
-                            modifier = Modifier.padding(16.dp),
-                            fontSize = 20.sp
-                        )
+                        Loader()
                     } else {
                         if (orders.isNotEmpty()) {
                             OrdersHistoryScreen(

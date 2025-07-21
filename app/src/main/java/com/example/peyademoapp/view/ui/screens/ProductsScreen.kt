@@ -82,7 +82,8 @@ fun ProductsScreen(
             ProductsList(
                 products = products,
                 modifier = Modifier.padding(16.dp),
-                cartViewModel = cartViewModel
+                cartViewModel = cartViewModel,
+                productsViewModel = productsViewModel
             )
 
         }

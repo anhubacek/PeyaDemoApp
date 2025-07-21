@@ -57,6 +57,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.peyademoapp.R
 import com.example.peyademoapp.model.dataclass.User
 import com.example.peyademoapp.view.ui.components.BottomNavBar
+import com.example.peyademoapp.view.ui.components.Loader
 import com.example.peyademoapp.view.ui.components.ProfileEdition
 import com.example.peyademoapp.view.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
@@ -67,7 +68,7 @@ import kotlinx.coroutines.launch
 fun ProfileScreen(
     viewModel: ProfileViewModel, navController: NavController
 ) {
-
+    val loading = viewModel.loading.collectAsState().value
     LaunchedEffect(Unit) {
         viewModel.loadUserProfile()
     }
@@ -227,7 +228,7 @@ fun ProfileScreen(
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     fontWeight = MaterialTheme.typography.titleLarge.fontWeight
                 )
-                if (editingProfile.not()) {
+                if (editingProfile.not() && loading.not()) {
                     Row(
                         modifier = Modifier
                             .clickable { editingProfile = true }
@@ -249,147 +250,146 @@ fun ProfileScreen(
                     }
                 }
 
-
             }
 
+            if (loading) {
+                Loader()
+            } else {
+                Box(
+                    modifier = Modifier
+                        .size(140.dp)
+                        .clickable {
+                            launcher.launch("image/*")
 
+                        }
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    if (userProfile?.image != null) {
+                        Image(
+                            painter = rememberAsyncImagePainter(
+                                model = userProfile.image,
+                                error = painterResource(R.drawable.image_error),
+                                placeholder = painterResource(R.drawable.gray_placeholder)
 
-            Box(
-                modifier = Modifier
-                    .size(140.dp)
-                    .clickable {
-                        launcher.launch("image/*")
+                            ),
+                            contentDescription = "Profile Image",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(CircleShape)
+                        )
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(8.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFE0E0E0)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Subir foto",
+                                color = Color.Black,
+                                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                                modifier = Modifier
+                                    .padding(8.dp)
 
+                            )
+                        }
                     }
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                if (userProfile?.image != null) {
-                    Image(
-                        painter = rememberAsyncImagePainter(
-                            model = userProfile.image,
-                            error = painterResource(R.drawable.image_error),
-                            placeholder = painterResource(R.drawable.gray_placeholder)
 
-                        ),
-                        contentDescription = "Profile Image",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(CircleShape)
+                }
+                if (editingProfile) {
+                    ProfileEdition(
+                        viewModel = viewModel, navController = navController,
+                        handleCancelEdition = { handleCancelEdition() },
+                        handleSaveChanges = { data: User ->
+                            onSaveChanges(data)
+                        }
+
+
                     )
                 } else {
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFE0E0E0)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .height(400.dp)
+                            .padding(vertical = 30.dp),
                     ) {
-                        Text(
-                            text = "Subir foto",
-                            color = Color.Black,
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+
+                        Column(
                             modifier = Modifier
-                                .padding(8.dp)
+                                .fillMaxHeight()
+                                .width(250.dp)
+                                .padding(vertical = 8.dp)
+                                .align(Alignment.CenterVertically)
 
-                        )
+                        ) {
+
+                            Text(
+                                text = "Nombre",
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                fontWeight = MaterialTheme.typography.titleMedium.fontWeight
+                            )
+                            Text(
+                                text = "${userProfile?.name ?: ""} ${userProfile?.lastName ?: ""}",
+                                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                            )
+                            Spacer(
+                                modifier = Modifier.height(20.dp)
+                            )
+                            Text(
+                                text = "Correo electrónico",
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                fontWeight = MaterialTheme.typography.titleMedium.fontWeight
+                            )
+                            Text(
+                                text = userProfile?.email ?: "",
+                                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                            )
+                            Spacer(
+                                modifier = Modifier.height(20.dp)
+                            )
+                            Text(
+                                text = "Nacionalidad",
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                fontWeight = MaterialTheme.typography.titleMedium.fontWeight
+                            )
+                            Text(
+                                text = userProfile?.nationality ?: "",
+                                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                            )
+                            Spacer(
+                                modifier = Modifier.height(20.dp)
+                            )
+
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .align(Alignment.Top),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Top
+                        ) {
+                        }
+
+
                     }
-                }
 
-            }
-            if (editingProfile) {
-                ProfileEdition(
-                    viewModel = viewModel, navController = navController,
-                    handleCancelEdition = { handleCancelEdition() },
-                    handleSaveChanges = { data: User ->
-                        onSaveChanges(data)
-                    }
-
-
-                )
-            } else {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(400.dp)
-                        .padding(vertical = 30.dp),
-                ) {
-
-                    Column(
+                    Text(
+                        text = "Cerrar sesión",
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         modifier = Modifier
-                            .fillMaxHeight()
-                            .width(250.dp)
-                            .padding(vertical = 8.dp)
-                            .align(Alignment.CenterVertically)
-
-                    ) {
-
-                        Text(
-                            text = "Nombre",
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            fontWeight = MaterialTheme.typography.titleMedium.fontWeight
-                        )
-                        Text(
-                            text = "${userProfile?.name ?: ""} ${userProfile?.lastName ?: ""}",
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                        )
-                        Spacer(
-                            modifier = Modifier.height(20.dp)
-                        )
-                        Text(
-                            text = "Correo electrónico",
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            fontWeight = MaterialTheme.typography.titleMedium.fontWeight
-                        )
-                        Text(
-                            text = userProfile?.email ?: "",
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                        )
-                        Spacer(
-                            modifier = Modifier.height(20.dp)
-                        )
-                        Text(
-                            text = "Nacionalidad",
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            fontWeight = MaterialTheme.typography.titleMedium.fontWeight
-                        )
-                        Text(
-                            text = userProfile?.nationality ?: "",
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                        )
-                        Spacer(
-                            modifier = Modifier.height(20.dp)
-                        )
-
-                    }
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .align(Alignment.Top),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Top
-                    ) {
-                    }
-
-
-                }
-
-                Text(
-                    text = "Cerrar sesión",
-                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                    modifier = Modifier
-                        .padding(top = 45.dp)
-                        .clickable { handleLogout() }
-                        .align(Alignment.CenterHorizontally),
-                    fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-                    style = TextStyle(textDecoration = TextDecoration.Underline),
-
+                            .padding(top = 45.dp)
+                            .clickable { handleLogout() }
+                            .align(Alignment.CenterHorizontally),
+                        fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
+                        style = TextStyle(textDecoration = TextDecoration.Underline),
                     )
-
+                }
             }
 
 

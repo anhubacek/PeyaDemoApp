@@ -23,6 +23,8 @@ class ProductsViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val filteredProducts: MutableStateFlow<List<Product>> = _filteredProducts
     private val _searchQuery = MutableStateFlow("")
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading
     val searchQuery = _searchQuery
     private val _message = MutableStateFlow("")
     val message = _message
@@ -36,6 +38,7 @@ class ProductsViewModel @Inject constructor(
 
     fun init() {
         viewModelScope.launch(Dispatchers.IO + exceptionHndler) {
+            _loading.value = true
             try {
                 val productList: List<Product> = getProductsUseCase()
                 _products.value = productList
@@ -44,6 +47,8 @@ class ProductsViewModel @Inject constructor(
             } catch (e: Exception) {
                 _message.value = "Error al cargar los productos"
                 println("Error in getProducts ${e.message}")
+            } finally {
+                _loading.value = false
             }
 
         }
