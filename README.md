@@ -8,7 +8,8 @@ picture. The cart persists in local storage, and there is worker that synchroniz
 periodically.
 
 ✨ Features
-
+- Login
+- Sign up 
 - Products Screen
 - Floating Cart
 - Cart Screen
