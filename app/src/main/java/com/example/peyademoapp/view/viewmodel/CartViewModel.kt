@@ -24,9 +24,12 @@ class CartViewModel @Inject constructor(
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
     private val _loadingOrders = MutableStateFlow(false)
+    private val _loadingCartItems = MutableStateFlow(false)
     val cartItems = _cartItems
     val orders = _orders
     val isLoadingOrders = _loadingOrders
+    val isLoadingCartItems = _loadingCartItems
+
     private val _message = MutableStateFlow("")
     val message = _message
 
@@ -55,13 +58,21 @@ class CartViewModel @Inject constructor(
 
     fun refreshCartItems() {
         viewModelScope.launch {
-            val cartItems =
-                cartItemsRepository.getAllCartItemsWithProducts().collect() { cartItemsList ->
-                    val cartItems = cartItemsList.map { cartItemEntity ->
-                        cartItemEntity.toDomain()
+            _loadingCartItems.value = true
+            try {
+                val cartItems =
+                    cartItemsRepository.getAllCartItemsWithProducts().collect() { cartItemsList ->
+                        val cartItems = cartItemsList.map { cartItemEntity ->
+                            cartItemEntity.toDomain()
+                        }
+                        _cartItems.value = cartItems
                     }
-                    _cartItems.value = cartItems
-                }
+            } catch (e: Exception) {
+                _message.value = "Error al cargar los artículos del carrito"
+                println("Error al cargar los artículos del carrito: ${e.message}")
+            } finally {
+                _loadingCartItems.value = false
+            }
 
         }
     }

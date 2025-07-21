@@ -39,6 +39,7 @@ fun ShoppingCartScreen(
     val cartItems = cartViewModel.cartItems.collectAsState().value
     val orders = cartViewModel.orders.collectAsState().value
     val isLoadingOrders = cartViewModel.isLoadingOrders.collectAsState().value
+    val isLoadingCartItems = cartViewModel.isLoadingCartItems.collectAsState().value
     var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
     val tabs = listOf("Mi carrito", "Mis pedidos")
 
@@ -83,13 +84,13 @@ fun ShoppingCartScreen(
 
             when (selectedTabIndex) {
                 0 ->
-                    if (cartItems.isEmpty()) {
+                    if (cartItems.isEmpty() && isLoadingCartItems.not()) {
                         Text(
                             text = "Tu carrito está vacío",
                             modifier = Modifier.padding(16.dp),
                             fontSize = 20.sp
                         )
-                    } else {
+                    } else if (cartItems.isNotEmpty()) {
                         Column {
                             CartList(cartItems, cartViewModel)
                             CartResume(cartItems, cartViewModel, handleChangeViewToOrders = {
@@ -98,6 +99,8 @@ fun ShoppingCartScreen(
 
                         }
 
+                    } else {
+                        Loader()
                     }
 
                 1 -> {

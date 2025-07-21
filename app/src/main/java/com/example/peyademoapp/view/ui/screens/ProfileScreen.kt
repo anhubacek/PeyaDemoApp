@@ -69,6 +69,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel, navController: NavController
 ) {
     val loading = viewModel.loading.collectAsState().value
+
     LaunchedEffect(Unit) {
         viewModel.loadUserProfile()
     }
