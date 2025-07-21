@@ -9,6 +9,8 @@ periodically.
 
 ## ✨ Features
 
+- Login
+- Registration
 - Products Screen
 - Floating Cart
 - Cart Screen
@@ -20,8 +22,9 @@ periodically.
 Before running the app, make sure to set the following environment variables in your
 local.properties file at the root of the project:
 
-- `API_BASE_URL` = You must use the API
+- `API_BASE_URL` = Use the API
   from [this repository](<https://github.com/anhubacek/PeyaDemoAppAPI>)
+  or https://peyademoappapi-kad2.onrender.com/
 - `CLOUDINARY_CLOUD_NAME`=
 - `CLOUDINARY_API_KEY`=
 - `CLOUDINARY_API_SECRET`=
