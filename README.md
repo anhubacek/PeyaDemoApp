@@ -7,7 +7,7 @@ Includes login, registration, and a user profile where users can edit their info
 picture. The cart persists in local storage, and there is worker that synchronizes the products
 periodically.
 
-✨ Features
+## ✨ Features
 
 - Products Screen
 - Floating Cart
@@ -15,7 +15,8 @@ periodically.
 - Orders History
 - User Profile
 
-⚙️ Environment setup
+## ⚙️ Environment setup
+
 Before running the app, make sure to set the following environment variables in your
 local.properties file at the root of the project:
 
@@ -27,3 +28,16 @@ local.properties file at the root of the project:
 - `CLOUDINARY_PRESET_NAME`=
 
 Replace the values with your own keys.
+
+## 📸 Screenshots
+
+<div style="display: flex; flex-wrap: wrap;">
+<img src="./docs/img-1.png" width="200" />
+<img src="./docs/img-2.png" width="200" />
+<img src="./docs/img-3.png" width="200" />
+<img src="./docs/img-4.png" width="200" />
+<img src="./docs/img-5.png" width="200" />
+<img src="./docs/img-6.png" width="200" />
+<img src="./docs/img-7.png" width="200" />
+<img src="./docs/img-8.png" width="200" />
+</div>
