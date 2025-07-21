@@ -45,7 +45,6 @@ fun ProductItem(product: Product, cartViewModel: CartViewModel) {
             .fillMaxWidth()
             .background(Color.Transparent),
         shape = RoundedCornerShape(12.dp),
-        //elevation = CardDefaults.cardElevation(8.dp)
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
         )

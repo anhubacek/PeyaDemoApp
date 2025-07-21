@@ -3,7 +3,7 @@ package com.example.peyademoapp.data.repository.users
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.peyademoapp.data.local.dataStore
+import com.example.peyademoapp.data.database.dataStore
 import com.example.peyademoapp.data.remote.api.ApiService
 import com.example.peyademoapp.model.LoginRequest
 import com.example.peyademoapp.model.LoginResponse

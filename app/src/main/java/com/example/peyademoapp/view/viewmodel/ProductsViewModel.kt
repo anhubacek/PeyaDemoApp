@@ -50,7 +50,6 @@ class ProductsViewModel @Inject constructor(
 
 
     fun filterProducts(query: String) {
-        println("Filtering products with query: ${query.length}")
         if (query.isNotEmpty()) {
             val filtered = _products.value.filter { product ->
                 product.name.contains(query, ignoreCase = true)

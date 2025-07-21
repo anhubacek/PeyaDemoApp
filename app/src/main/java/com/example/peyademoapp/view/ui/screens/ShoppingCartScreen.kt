@@ -43,6 +43,7 @@ fun ShoppingCartScreen(
     val tabs = listOf("Mi carrito", "Mis pedidos")
 
     LaunchedEffect(Unit) {
+        cartViewModel.refreshCartItems()
         cartViewModel.loadOrders()
     }
     Scaffold(

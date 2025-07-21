@@ -52,7 +52,6 @@ class RegisterViewModel @Inject constructor(
             )
 
             val user = usersDataSource.getUserByEmail(email.trim())
-            println("Usuario creado: ${user.name} ${user.lastName} (${user.email})")
             return true
 
         } catch (e: Exception) {

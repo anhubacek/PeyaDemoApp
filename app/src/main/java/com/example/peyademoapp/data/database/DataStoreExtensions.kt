@@ -1,4 +1,4 @@
-package com.example.peyademoapp.data.local
+package com.example.peyademoapp.data.database
 
 import android.content.Context
 import androidx.datastore.core.DataStore

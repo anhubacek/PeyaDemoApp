@@ -39,10 +39,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import coil.compose.rememberAsyncImagePainter
 import com.example.peyademoapp.R
 import com.example.peyademoapp.model.CartItem
 import com.example.peyademoapp.view.viewmodel.CartViewModel
+import kotlinx.coroutines.launch
 
 @SuppressLint("DefaultLocale")
 @Composable
@@ -51,17 +53,30 @@ fun CartItem(
     cartViewModel: CartViewModel
 ) {
     var quantity by rememberSaveable { mutableStateOf(cartItem.quantity) }
+    val viewModelScope = cartViewModel.viewModelScope
+
 
     fun onDecreaseQuantity() {
-        if (quantity > 1) {
-            quantity--
-            cartViewModel.updateQuantity(cartItem, quantity)
+        viewModelScope.launch {
+            if (quantity > 1) {
+                quantity--
+                cartViewModel.updateQuantity(cartItem, quantity)
+            }
         }
     }
 
     fun onIncreaseQuantity() {
         quantity++
-        cartViewModel.updateQuantity(cartItem, quantity)
+        viewModelScope.launch {
+            cartViewModel.updateQuantity(cartItem, quantity)
+        }
+
+    }
+
+    fun handleRemoveFromCart(cartItem: CartItem) {
+        viewModelScope.launch {
+            cartViewModel.removeFromCart(cartItem)
+        }
     }
 
     Card(
@@ -186,7 +201,10 @@ fun CartItem(
                 contentAlignment = Alignment.Center
             ) {
                 IconButton(
-                    onClick = { cartViewModel.removeFromCart(cartItem) },
+                    onClick = {
+                        handleRemoveFromCart(cartItem)
+
+                    },
                     modifier = Modifier
                         .size(30.dp)
 

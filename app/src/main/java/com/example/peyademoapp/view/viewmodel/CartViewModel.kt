@@ -2,6 +2,7 @@ package com.example.peyademoapp.view.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.peyademoapp.data.repository.cartitems.CartItemsRepository
 import com.example.peyademoapp.data.repository.orders.OrdersDataSource
 import com.example.peyademoapp.data.repository.users.UsersDataSource
 import com.example.peyademoapp.model.CartItem
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val ordersDataSource: OrdersDataSource,
-    private val usersDataSource: UsersDataSource
+    private val usersDataSource: UsersDataSource,
+    private val cartItemsRepository: CartItemsRepository
 ) : ViewModel() {
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
@@ -28,13 +30,13 @@ class CartViewModel @Inject constructor(
     private val _message = MutableStateFlow("")
     val message = _message
 
-    val exceptionHndler = CoroutineExceptionHandler { _, exception ->
+    val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _message.value = "Error: ${exception.message}"
         println("Unexpected error: ${exception.message}")
     }
 
     fun loadOrders() {
-        viewModelScope.launch(Dispatchers.IO + exceptionHndler) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _loadingOrders.value = true
             try {
                 val userEmail = usersDataSource.getStoredEmail()
@@ -51,57 +53,56 @@ class CartViewModel @Inject constructor(
         }
     }
 
+    fun refreshCartItems() {
+        viewModelScope.launch {
+            val cartItems =
+                cartItemsRepository.getAllCartItemsWithProducts().collect() { cartItemsList ->
+                    val cartItems = cartItemsList.map { cartItemEntity ->
+                        cartItemEntity.toDomain()
+                    }
+                    _cartItems.value = cartItems
+                }
+
+        }
+    }
+
     fun addToCart(cartItem: CartItem) {
-        val existingItem = _cartItems.value.find { it.product._id == cartItem.product._id }
-        _cartItems.value = if (existingItem != null) {
-            _cartItems.value.map {
-                if (it.product._id == cartItem.product._id) {
-                    it.copy(quantity = it.quantity + cartItem.quantity)
-                } else {
-                    it
-                }
-            }
-        } else {
-            _cartItems.value + cartItem
-        }
-    }
-
-
-    fun decreaseQuantity(cartItem: CartItem) {
-        _cartItems.value = _cartItems.value.mapNotNull { item ->
-            if (item.product._id == cartItem.product._id) {
-                if (item.quantity > 1) {
-                    item.copy(quantity = item.quantity - 1)
-                } else {
-                    null
-                }
+        viewModelScope.launch {
+            val existentItem = cartItemsRepository.getCartItemByProductId(cartItem.product._id)
+            if (existentItem != null) {
+                val updatedItem =
+                    existentItem.copy(quantity = existentItem.quantity + cartItem.quantity)
+                cartItemsRepository.updateCartItem(updatedItem)
             } else {
-                item
+                cartItemsRepository.insertCartItem(cartItem)
             }
+            refreshCartItems()
         }
     }
 
 
-    fun removeFromCart(cartItem: CartItem) {
-        _cartItems.value = _cartItems.value.filter { it.product._id != cartItem.product._id }
+    suspend fun removeFromCart(cartItem: CartItem) {
+        cartItemsRepository.deleteCartItem(cartItem.product._id)
+        refreshCartItems()
     }
 
-    fun clearCart() {
-        _cartItems.value = emptyList()
+    suspend fun clearCart() {
+        cartItemsRepository.clearCart()
+        refreshCartItems()
     }
 
-    fun updateQuantity(cartItem: CartItem, newQuantity: Int) {
-        _cartItems.value = _cartItems.value.mapNotNull { item ->
-            if (item.product._id == cartItem.product._id) {
-                if (newQuantity > 0) {
-                    item.copy(quantity = newQuantity)
-                } else {
-                    null
-                }
+
+    suspend fun updateQuantity(cartItem: CartItem, newQuantity: Int) {
+        val existingItem = cartItemsRepository.getCartItemByProductId(cartItem.product._id)
+        if (existingItem != null) {
+            if (newQuantity > 0) {
+                val updatedItem = existingItem.copy(quantity = newQuantity)
+                cartItemsRepository.updateCartItem(updatedItem)
             } else {
-                item
+                cartItemsRepository.deleteCartItem(cartItem.product._id)
             }
         }
+        refreshCartItems()
     }
 
     suspend fun confirmOrder(): Boolean {
