@@ -24,7 +24,7 @@ fun OrderItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
+            .padding(5.dp)
             .shadow(
                 elevation = 4.dp,
                 shape = MaterialTheme.shapes.medium
@@ -34,7 +34,8 @@ fun OrderItem(
         Text(
             text = "Pedido #${number}",
             modifier = Modifier.padding(8.dp),
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
         )
 
         order.items.forEach { item ->

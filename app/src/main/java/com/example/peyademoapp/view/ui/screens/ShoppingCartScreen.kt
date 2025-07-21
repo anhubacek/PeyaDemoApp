@@ -28,7 +28,6 @@ import androidx.navigation.NavController
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.CartList
 import com.example.peyademoapp.view.ui.components.CartResume
-import com.example.peyademoapp.view.ui.components.OrdersHistory
 import com.example.peyademoapp.view.viewmodel.CartViewModel
 
 @Composable
@@ -59,7 +58,7 @@ fun ShoppingCartScreen(
             ) {
                 tabs.forEachIndexed { index, title ->
                     val isSelected = selectedTabIndex == index
-                    val backgroundColor = if (isSelected) Color(0xFF4CAF50) else Color.LightGray
+                    val backgroundColor = if (isSelected) Color(0xFF51643F) else Color.LightGray
                     val textColor = if (isSelected) Color.White else Color.Black
 
                     Box(
@@ -109,7 +108,7 @@ fun ShoppingCartScreen(
                         )
                     } else {
                         if (orders.isNotEmpty()) {
-                            OrdersHistory(
+                            OrdersHistoryScreen(
                                 orders = orders,
                                 modifier = Modifier.padding(16.dp)
                             )

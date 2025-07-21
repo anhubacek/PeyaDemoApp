@@ -9,17 +9,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.peyademoapp.navigation.AppNavigation
-import com.example.peyademoapp.view.ui.theme.PeyaDemoAppTheme
+import com.example.peyademoapp.view.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var productSyncManager: ProductSyncManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        productSyncManager.schedulePeriodicSync()
+        productSyncManager.syncNow()
         enableEdgeToEdge()
         setContent {
-            PeyaDemoAppTheme(
-                darkTheme = false,
+            AppTheme(
+                darkTheme = true,
             ) {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     AppNavigation(

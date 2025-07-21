@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -25,7 +24,6 @@ import androidx.navigation.NavController
 @Composable
 fun BottomNavBar(
     navController: NavController,
-    containerColor: Color = Color.White,
     modifier: Any = Modifier
         .height(80.dp)
         .shadow(
@@ -78,9 +76,11 @@ fun BottomBarIcon(
                 }
             }
     ) {
-        Icon(imageVector = icon, contentDescription = label, tint = Color.Black)
+        Icon(
+            imageVector = icon, contentDescription = label
+        )
         Text(
-            text = label, color = Color.Black
+            text = label
         )
     }
 }

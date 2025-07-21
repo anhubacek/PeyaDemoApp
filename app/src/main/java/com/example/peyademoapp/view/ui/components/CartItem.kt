@@ -122,14 +122,12 @@ fun CartItem(
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 18.sp,
                     modifier = Modifier.padding(horizontal = 6.dp),
-                    color = Color.Black
                 )
                 Text(
                     text = String.format("$%.2f", cartItem.product.price),
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 4.dp),
-                    color = Color.Black
                 )
 
             }
@@ -212,7 +210,6 @@ fun CartItem(
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Agregar",
-                        tint = Color.Black,
                     )
                 }
             }
