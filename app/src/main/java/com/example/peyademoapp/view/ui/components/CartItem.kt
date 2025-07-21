@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import coil.compose.rememberAsyncImagePainter
 import com.example.peyademoapp.R
-import com.example.peyademoapp.model.CartItem
+import com.example.peyademoapp.model.dataclass.CartItem
 import com.example.peyademoapp.view.viewmodel.CartViewModel
 import kotlinx.coroutines.launch
 

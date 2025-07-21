@@ -1,8 +1,8 @@
 package com.example.peyademoapp.data.repository.orders
 
 import com.example.peyademoapp.data.remote.api.ApiService
-import com.example.peyademoapp.model.Order
-import com.example.peyademoapp.model.OrderRequest
+import com.example.peyademoapp.model.dataclass.Order
+import com.example.peyademoapp.model.dataclass.OrderRequest
 import javax.inject.Inject
 
 class OrdersDataSourceImpl

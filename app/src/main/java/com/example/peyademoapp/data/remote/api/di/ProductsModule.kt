@@ -18,3 +18,4 @@ abstract class ProductsModule {
         impl: ProductsDataSourceImpl
     ): ProductsDataSource
 }
+

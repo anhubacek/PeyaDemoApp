@@ -3,7 +3,8 @@ package com.example.peyademoapp.view.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.peyademoapp.data.repository.products.ProductsDataSource
-import com.example.peyademoapp.model.Product
+import com.example.peyademoapp.domain.usecase.products.GetProductsUseCase
+import com.example.peyademoapp.model.dataclass.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
-    private val productsDataSource: ProductsDataSource
+    private val productsDataSource: ProductsDataSource,
+    private val getProductsUseCase: GetProductsUseCase
 ) : ViewModel() {
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     private val _filteredProducts: MutableStateFlow<List<Product>> =
@@ -35,7 +37,7 @@ class ProductsViewModel @Inject constructor(
     fun init() {
         viewModelScope.launch(Dispatchers.IO + exceptionHndler) {
             try {
-                val productList: List<Product> = productsDataSource.getProducts()
+                val productList: List<Product> = getProductsUseCase()
                 _products.value = productList
                 _filteredProducts.value = productList
 

@@ -1,6 +1,6 @@
 package com.example.peyademoapp.data.repository.products
 
-import com.example.peyademoapp.model.Product
+import com.example.peyademoapp.model.dataclass.Product
 
 interface ProductsDataSource {
     suspend fun insertProductsInDB(products: List<Product>)

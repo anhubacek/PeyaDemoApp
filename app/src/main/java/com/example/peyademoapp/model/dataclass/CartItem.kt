@@ -1,4 +1,4 @@
-package com.example.peyademoapp.model
+package com.example.peyademoapp.model.dataclass
 
 data class CartItem(
     val product: Product,

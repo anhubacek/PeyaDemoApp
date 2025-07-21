@@ -3,7 +3,7 @@ package com.example.peyademoapp.data.repository.products
 import com.example.peyademoapp.data.database.dao.ProductDao
 import com.example.peyademoapp.data.database.entity.ProductEntity
 import com.example.peyademoapp.data.remote.api.ApiService
-import com.example.peyademoapp.model.Product
+import com.example.peyademoapp.model.dataclass.Product
 import javax.inject.Inject
 
 class ProductsDataSourceImpl

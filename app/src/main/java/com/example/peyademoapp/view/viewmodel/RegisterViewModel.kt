@@ -2,7 +2,7 @@ package com.example.peyademoapp.view.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.peyademoapp.data.repository.users.UsersDataSource
-import com.example.peyademoapp.model.User
+import com.example.peyademoapp.model.dataclass.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

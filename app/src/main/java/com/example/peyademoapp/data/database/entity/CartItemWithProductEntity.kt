@@ -3,7 +3,7 @@ package com.example.peyademoapp.data.database.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Relation
-import com.example.peyademoapp.model.CartItem
+import com.example.peyademoapp.model.dataclass.CartItem
 
 @Entity
 data class CartItemWithProductEntity(

@@ -9,7 +9,7 @@ import com.cloudinary.Cloudinary
 import com.example.peyademoapp.BuildConfig
 import com.example.peyademoapp.data.repository.users.UsersDataSource
 
-import com.example.peyademoapp.model.User
+import com.example.peyademoapp.model.dataclass.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

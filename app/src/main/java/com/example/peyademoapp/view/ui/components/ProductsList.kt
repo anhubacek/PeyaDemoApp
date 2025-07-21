@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.peyademoapp.model.Product
+import com.example.peyademoapp.model.dataclass.Product
 import com.example.peyademoapp.view.viewmodel.CartViewModel
 
 @Composable

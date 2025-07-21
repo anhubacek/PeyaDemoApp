@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.peyademoapp.model.Order
+import com.example.peyademoapp.model.dataclass.Order
 
 @Composable
 fun OrdersHistory(

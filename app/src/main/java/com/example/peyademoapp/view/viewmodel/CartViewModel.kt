@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.peyademoapp.data.repository.cartitems.CartItemsRepository
 import com.example.peyademoapp.data.repository.orders.OrdersDataSource
 import com.example.peyademoapp.data.repository.users.UsersDataSource
-import com.example.peyademoapp.model.CartItem
-import com.example.peyademoapp.model.Order
-import com.example.peyademoapp.model.OrderRequest
+import com.example.peyademoapp.model.dataclass.CartItem
+import com.example.peyademoapp.model.dataclass.Order
+import com.example.peyademoapp.model.dataclass.OrderRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers

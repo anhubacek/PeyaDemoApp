@@ -55,7 +55,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.peyademoapp.R
-import com.example.peyademoapp.model.User
+import com.example.peyademoapp.model.dataclass.User
 import com.example.peyademoapp.view.ui.components.BottomNavBar
 import com.example.peyademoapp.view.ui.components.ProfileEdition
 import com.example.peyademoapp.view.viewmodel.ProfileViewModel

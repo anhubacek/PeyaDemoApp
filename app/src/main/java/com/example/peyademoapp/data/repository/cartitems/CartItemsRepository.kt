@@ -2,7 +2,7 @@ package com.example.peyademoapp.data.repository.cartitems
 
 import com.example.peyademoapp.data.database.dao.CartItemDao
 import com.example.peyademoapp.data.database.entity.CartItemEntity
-import com.example.peyademoapp.model.CartItem
+import com.example.peyademoapp.model.dataclass.CartItem
 import javax.inject.Inject
 
 class CartItemsRepository

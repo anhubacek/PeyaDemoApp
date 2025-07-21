@@ -1,9 +1,9 @@
 package com.example.peyademoapp.data.repository.users
 
 
-import com.example.peyademoapp.model.LoginRequest
-import com.example.peyademoapp.model.LoginResponse
-import com.example.peyademoapp.model.User
+import com.example.peyademoapp.model.dataclass.LoginRequest
+import com.example.peyademoapp.model.dataclass.LoginResponse
+import com.example.peyademoapp.model.dataclass.User
 
 
 interface UsersDataSource {

@@ -2,7 +2,7 @@ package com.example.peyademoapp.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.peyademoapp.model.Product
+import com.example.peyademoapp.model.dataclass.Product
 
 @Entity(tableName = "products")
 data class ProductEntity(

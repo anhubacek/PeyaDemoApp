@@ -3,7 +3,7 @@ package com.example.peyademoapp.data.database.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.peyademoapp.model.CartItem
+import com.example.peyademoapp.model.dataclass.CartItem
 
 
 @Entity(

@@ -5,9 +5,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.peyademoapp.data.database.dataStore
 import com.example.peyademoapp.data.remote.api.ApiService
-import com.example.peyademoapp.model.LoginRequest
-import com.example.peyademoapp.model.LoginResponse
-import com.example.peyademoapp.model.User
+import com.example.peyademoapp.model.dataclass.LoginRequest
+import com.example.peyademoapp.model.dataclass.LoginResponse
+import com.example.peyademoapp.model.dataclass.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
